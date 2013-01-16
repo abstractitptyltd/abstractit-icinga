@@ -1,0 +1,50 @@
+<VirtualHost <%= @web_ip %>:<%= @web_port %>>
+<% if @ssl == true %>
+        SSLEngine on
+        SSLCipherSuite <%= ssl_cypher_list %>
+        SSLCertificateFile <%= @apache_ssl_dir %>/<%= @webhostname %>.crt
+        SSLCertificateKeyFile <%= @apache_ssl_dir %>/<%= @webhostname %>.key
+        SSLOptions +FakeBasicAuth +ExportCertData +StdEnvVars +StrictRequire
+<% end %>
+        ServerName <%= webhostname %>
+        CustomLog <%= apache_log_dir %>/icinga-access_log combined
+        ErrorLog <%= apache_log_dir %>/icinga-error_log
+        DirectoryIndex index.php
+
+ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi"
+
+<Directory "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi">
+#  SSLRequireSSL
+   Options ExecCGI
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+#  Order deny,allow
+#  Deny from all
+#  Allow from 127.0.0.1
+   AuthName "Icinga Access"
+   AuthType Basic
+   AuthUserFile /etc/auth/htpasswd.users
+   AuthGroupFile /etc/auth/htpasswd.groups
+   Require valid-user
+</Directory>
+
+Alias /icinga "/usr/share/icinga/"
+
+<Directory "/usr/share/icinga/">
+#  SSLRequireSSL
+   Options None
+   AllowOverride All
+   Order allow,deny
+   Allow from all
+#  Order deny,allow
+#  Deny from all
+#  Allow from 127.0.0.1
+   AuthName "Icinga Access"
+   AuthType Basic
+   AuthUserFile /etc/auth/htpasswd.users
+   AuthGroupFile /etc/auth/htpasswd.groups
+   Require valid-user
+</Directory>
+</VirtualHost>
+
