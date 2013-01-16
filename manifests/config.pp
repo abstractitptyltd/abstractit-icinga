@@ -16,11 +16,6 @@ class icinga::config {
   $clickatell_password = hiera('monitoring::clickatell_password', undef)
   $is_pbx = hiera('is_pbx', false)
   $pbx_mngr_pw = hiera('monitoring::pbx_mngr_pw', undef)
-  $ido_db_host = $icinga::params::ido_db_host
-  $ido_db_port = $icinga::params::ido_db_port
-  $ido_db_name = $icinga::params::ido_db_name
-  $ido_db_user = $icinga::params::ido_db_user
-  $ido_db_pass = $icinga::params::ido_db_pass
   $debug = $icinga::params::debug
   $admin_email = $icinga::params::admin_email
   $admin_pager = $icinga::params::admin_pager
@@ -43,15 +38,6 @@ class icinga::config {
     mode => 644,
     notify => Class[icinga::service],
     content => template('icinga/idomod.cfg.erb'),
-  }
-
-  file { 'ido2dbcfg':
-    name => '/etc/icinga/ido2db.cfg',
-    owner => root,
-    group => root,
-    mode => 660,
-    notify => Class[icinga::idoservice],
-    content => template('icinga/ido2db.cfg.erb'),
   }
 
   file { 'icinga_resource':

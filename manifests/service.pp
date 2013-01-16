@@ -1,6 +1,6 @@
 
 class icinga::service {
-  include icinga::params
+
   service { 'icinga':
     ensure => running,
     enable => true,

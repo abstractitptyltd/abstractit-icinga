@@ -1,10 +1,11 @@
 
 class icinga {
-  include icinga::params
-	include icinga::install
-  include icinga::config
-  include icinga::idoservice
-  include icinga::service
-  include icinga::gui
-  #	include icinga::scripts
+  class{'icinga::params':} ->
+  class{'icinga::install':} ->
+  class{'icinga::idoconfig':} ~>
+  class{'icinga::idoservice':} ->
+  class{'icinga::config':} ~>
+  class{'icinga::service':} ->
+  class{'icinga::gui':} ->
+  Class["icinga"] 
 }

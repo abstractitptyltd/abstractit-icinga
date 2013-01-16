@@ -5,7 +5,7 @@ class icinga::idoservice {
     enable => true,
     hasstatus => true,
     hasrestart => true,
-    require => Class[icinga::config],
+    require => Class[icinga::idoconfig],
   }
 
 }
