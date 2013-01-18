@@ -7,7 +7,7 @@ class icinga::config {
   $embedded_perl = $icinga::params::embedded_perl
   $admin_group = $icinga::params::admin_group
   $nagios_plugins = $icinga::params::nagios_plugins
-  $nagios_extra_plugins = $icinga::config::nagios_extra_plugins
+  $nagios_extra_plugins = $icinga::params::nagios_extra_plugins
   $db_password = $icinga::params::db_password
   $email_password = $icinga::params::email_password
   $check_timeout = $icinga::params::check_timeout
