@@ -30,5 +30,7 @@ class icinga::params (
   $email_password = hiera('monitoring::email_password')
   $apache_ssl_dir = hiera('apache_ssl_dir', '/etc/httpd/ssl')
   $apache_log_dir = hiera('apache_log_dir', '/var/log/httpd')
+  $apache_mods_dir = hiera('apache_mods_dir', '/etc/httpd/conf.d')
+  $ssl_cert_source = hiera('ssl_cert_source')
 }
 

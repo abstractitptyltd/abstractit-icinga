@@ -38,7 +38,7 @@ class icinga::gui {
       group   => root,
       mode  => 644,
       source  => "$ssl_cert_source/$webhostname.key",
-      require  => Class["webserver::apache::ssl"],
+      #      require  => Class["webserver::apache::ssl"],
       notify  => Service[apache],
     }
     file { "ssl_cert_$icinga_webhostname":
@@ -47,7 +47,7 @@ class icinga::gui {
       group   => root,
       mode  => 644,
       source  => "$ssl_cert_source/$webhostname.crt",
-      require  => Class["webserver::apache::ssl"],
+      #      require  => Class["webserver::apache::ssl"],
       notify  => Service[apache],
     }
   }
