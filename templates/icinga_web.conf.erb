@@ -1,14 +1,14 @@
-<VirtualHost <%= @web_ip %>:<%= @web_port %>>
-<% if @ssl == true %>
+<VirtualHost <%= scope.lookupvar('icinga::params::web_ip') %>:<%= scope.lookupvar('icinga::params::web_port') %>>
+<% if scope.lookupvar('icinga::params::ssl') == true %>
         SSLEngine on
-        SSLCipherSuite <%= ssl_cypher_list %>
-        SSLCertificateFile <%= @apache_ssl_dir %>/<%= @webhostname %>.crt
-        SSLCertificateKeyFile <%= @apache_ssl_dir %>/<%= @webhostname %>.key
+        SSLCipherSuite <%= scope.lookupvar('icinga::params::ssl_cypher_list') %>
+        SSLCertificateFile <%= scope.lookupvar('apache::params::ssl_path') %>/<%= scope.lookupvar('icinga::params::webhostname') %>.crt
+        SSLCertificateKeyFile <%= scope.lookupvar('apache::params::ssl_path') %>/<%= scope.lookupvar('icinga::params::webhostname') %>.key
         SSLOptions +FakeBasicAuth +ExportCertData +StdEnvVars +StrictRequire
 <% end %>
-        ServerName <%= webhostname %>
-        CustomLog <%= apache_log_dir %>/icinga-access_log combined
-        ErrorLog <%= apache_log_dir %>/icinga-error_log
+        ServerName <%= scope.lookupvar('icinga::params::webhostname') %>
+        CustomLog <%= logroot %>/icinga-access_log combined
+        ErrorLog <%= logroot %>/icinga-error_log
         DirectoryIndex index.php
 
 ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi"
@@ -19,9 +19,6 @@ ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %
    AllowOverride None
    Order allow,deny
    Allow from all
-#  Order deny,allow
-#  Deny from all
-#  Allow from 127.0.0.1
    AuthName "Icinga Access"
    AuthType Basic
    AuthUserFile /etc/auth/htpasswd.users
@@ -37,9 +34,6 @@ Alias /icinga "/usr/share/icinga/"
    AllowOverride All
    Order allow,deny
    Allow from all
-#  Order deny,allow
-#  Deny from all
-#  Allow from 127.0.0.1
    AuthName "Icinga Access"
    AuthType Basic
    AuthUserFile /etc/auth/htpasswd.users

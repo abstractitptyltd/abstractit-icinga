@@ -11,6 +11,7 @@ class icinga::params (
   $ro_users = undef,
   $ro_group = undef,
   $check_timeout = 180,
+  $ido_db_server = 'mysql',
   $ido_db_host = 'localhost',
   $ido_db_port = 3306,
   $ido_db_name = 'icinga',
@@ -28,9 +29,6 @@ class icinga::params (
   $db_password = hiera('monitoring::db_password')
   $email_user = hiera('monitoring::email_user')
   $email_password = hiera('monitoring::email_password')
-  $apache_ssl_dir = hiera('apache_ssl_dir', '/etc/httpd/ssl')
-  $apache_log_dir = hiera('apache_log_dir', '/var/log/httpd')
-  $apache_mods_dir = hiera('apache_mods_dir', '/etc/httpd/conf.d')
   $ssl_cert_source = hiera('ssl_cert_source')
 }
 
