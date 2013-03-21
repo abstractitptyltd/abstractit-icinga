@@ -27,22 +27,20 @@ class icinga::gui {
 
   if ($icinga::params::ssl == true) {
     include apache::ssl
-    file { "ssl_key_$webhostname":
-      name  => "$apache_ssl_dir/$webhostname.key",
+    file { "ssl_key_${icinga::params::webhostname}":
+      name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",
       owner   => root,
       group   => root,
       mode  => 644,
-      source  => "$ssl_cert_source/$webhostname.key",
-      #      require  => Class["webserver::apache::ssl"],
+      source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
       notify  => Service[apache],
     }
-    file { "ssl_cert_$icinga_webhostname":
-      name  => "$apache_ssl_dir/$webhostname.crt",
+    file { "ssl_crt_${icinga::params::webhostname}":
+      name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
       owner   => root,
       group   => root,
       mode  => 644,
-      source  => "$ssl_cert_source/$webhostname.crt",
-      #      require  => Class["webserver::apache::ssl"],
+      source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.crt",
       notify  => Service[apache],
     }
   }

@@ -14,6 +14,8 @@ class icinga::idoconfig {
   $ido_db_name = $icinga::params::ido_db_name
   $ido_db_user = $icinga::params::ido_db_user
   $ido_db_pass = $icinga::params::ido_db_pass
+  # db install file lives here
+  # /usr/share/doc/icinga-idoutils-libdbi-mysql-1.8.4/db/${icinga::params::ido_db_server}
 
   file { 'ido2dbcfg':
     name => '/etc/icinga/ido2db.cfg',
