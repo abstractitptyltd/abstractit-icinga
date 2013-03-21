@@ -104,6 +104,11 @@ If you wish to join in let me know.
 Release Notes
 -------------
 
+**1.0.4**
+
+Adding option to turn off firewall management
+
+
 **1.0.3**
 
 Switching to puppetlabs/apache for managing the apache vhost

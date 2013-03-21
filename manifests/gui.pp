@@ -23,6 +23,7 @@ class icinga::gui {
     docroot_owner => root,
     docroot_group => root,
     template => "icinga/icinga_web.conf.erb",
+    configure_firewall => $icinga::params::configure_firewall,
   }
 
   if ($icinga::params::ssl == true) {

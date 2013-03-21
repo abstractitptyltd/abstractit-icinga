@@ -4,6 +4,7 @@ class icinga::params (
   $web_port = 443,
   $ssl = true,
   $webhostname = $fqdn,
+  $configure_firewall = true,
   $notifications = 1,
   $embedded_perl = 0,
   $admin_group = undef,
