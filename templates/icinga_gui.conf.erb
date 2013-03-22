@@ -1,0 +1,44 @@
+<VirtualHost <%= scope.lookupvar('icinga::params::web_ip') %>:<%= scope.lookupvar('icinga::params::web_port') %>>
+<% if scope.lookupvar('icinga::params::ssl') == true %>
+        SSLEngine on
+        SSLCipherSuite <%= scope.lookupvar('icinga::params::ssl_cypher_list') %>
+        SSLCertificateFile <%= scope.lookupvar('apache::params::ssl_path') %>/<%= scope.lookupvar('icinga::params::webhostname') %>.crt
+        SSLCertificateKeyFile <%= scope.lookupvar('apache::params::ssl_path') %>/<%= scope.lookupvar('icinga::params::webhostname') %>.key
+        SSLOptions +FakeBasicAuth +ExportCertData +StdEnvVars +StrictRequire
+<% end %>
+        ServerName <%= scope.lookupvar('icinga::params::webhostname') %>
+        CustomLog <%= logroot %>/icinga-access_log combined
+        ErrorLog <%= logroot %>/icinga-error_log
+        DirectoryIndex index.php
+
+ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi"
+
+<Directory "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi">
+#  SSLRequireSSL
+   Options ExecCGI
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+   AuthName "Icinga Access"
+   AuthType Basic
+   AuthUserFile /etc/auth/htpasswd.users
+   AuthGroupFile /etc/auth/htpasswd.groups
+   Require valid-user
+</Directory>
+
+Alias /icinga "/usr/share/icinga/"
+
+<Directory "/usr/share/icinga/">
+#  SSLRequireSSL
+   Options None
+   AllowOverride All
+   Order allow,deny
+   Allow from all
+   AuthName "Icinga Access"
+   AuthType Basic
+   AuthUserFile /etc/auth/htpasswd.users
+   AuthGroupFile /etc/auth/htpasswd.groups
+   Require valid-user
+</Directory>
+</VirtualHost>
+
