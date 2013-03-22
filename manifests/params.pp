@@ -5,6 +5,7 @@ class icinga::params (
   $ssl = true,
   $webhostname = $fqdn,
   $configure_firewall = true,
+  $gui_type = "classic",
   $notifications = 1,
   $embedded_perl = 0,
   $admin_group = undef,

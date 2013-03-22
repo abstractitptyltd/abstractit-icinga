@@ -9,6 +9,10 @@ class icinga::gui {
   $ro_users = $icinga::params::ro_users
   $ro_group = $icinga::params::ro_group
 
+  package { 'icinga-gui':
+    ensure => installed,
+  }
+
   file { "icingacgicfg":
     name  => "/etc/icinga/cgi.cfg",
     owner  => icinga,
@@ -22,7 +26,7 @@ class icinga::gui {
     docroot => '/usr/share/icinga/',
     docroot_owner => root,
     docroot_group => root,
-    template => "icinga/icinga_web.conf.erb",
+    template => "icinga/icinga_gui.conf.erb",
     configure_firewall => $icinga::params::configure_firewall,
   }
 
@@ -34,7 +38,7 @@ class icinga::gui {
       group   => root,
       mode  => 644,
       source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
-      notify  => Service[apache],
+      notify  => Service[httpd],
     }
     file { "ssl_crt_${icinga::params::webhostname}":
       name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
@@ -42,7 +46,7 @@ class icinga::gui {
       group   => root,
       mode  => 644,
       source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.crt",
-      notify  => Service[apache],
+      notify  => Service[httpd],
     }
   }
 

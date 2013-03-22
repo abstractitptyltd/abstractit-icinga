@@ -104,10 +104,14 @@ If you wish to join in let me know.
 Release Notes
 -------------
 
+**1.0.5**
+
+Adding option to set which gui to use, "none" dosen't setup the gui
+Fixing name of service for apache
+
 **1.0.4**
 
 Adding option to turn off firewall management
-
 
 **1.0.3**
 

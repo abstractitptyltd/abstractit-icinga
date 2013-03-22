@@ -6,6 +6,14 @@ class icinga {
   class{'icinga::idoservice':} ->
   class{'icinga::config':} ~>
   class{'icinga::service':} ->
-  class{'icinga::gui':} ->
   Class["icinga"] 
+
+  case $icinga::params::gui_type {
+    'classic': {
+      include icinga::gui
+    }
+    'none': {
+      notice("WARNING::: no gui selected")
+    }
+  }
 }
