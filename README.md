@@ -83,12 +83,49 @@ extra settings
     $email_password = hiera('monitoring::email_password')
     $ssl_cert_source = hiera('ssl_cert_source')
 
+Using the new weg interface
+
+set these options for the database the web interface will use
+    $web_db_server = 'mysql',
+    $web_db_host = 'localhost',
+    $web_db_port = 3306,
+    $web_db_name = 'icinga_web',
+    $web_db_user = 'icinga_web',
+    $web_db_pass = 'icinga_web',
+
+rename your authe scheme if you need to
+
+    $web_auth_name = "user_defined_1",
+
+Set this to chose which auth scheme to use
+
+    $web_auth_type = 'internal',
+
+Valid options are `internal`, `httpbasic`, `ldap` and `none`
+Inernal uses the database set about for managing users
+httpbasic uses the standard apache auth scheme for getting user details\
+ldap uses the options below to setup authentication
+
+
+set these if you want to use ldap auth via openldap, FreeIPA  or Active Directory
+
+    $ldap_ssl = false,
+    $ldap_tls = true,
+    $ldap_server = "ldap.${domain}",
+    $ldap_firstname = 'givenName',
+    $ldap_lastname = 'sn',
+    $ldap_email = 'mail',
+    $ldap_basedn = undef,
+    $ldap_binddn = undef,
+    $ldap_bindpw = undef,
+    $ldap_userattr = uid,
+    $ldap_filter_extra = undef,
 
 Implementation
 --------------
 
 Uses files based on templates to manage the icinga config files and standard puppet resources fo managing services and such.
-I have included some tricky logic to make sure the icinga service on Fedora 18 properly.
+I have included some tricky logic to make sure the icinga service on Fedora 18 starts and stops properly.
 
 Limitations
 ------------
@@ -103,6 +140,10 @@ If you wish to join in let me know.
 
 Release Notes
 -------------
+
+**1.0.6**
+
+Adding the option of setting up the new web interface and or the classic one
 
 **1.0.5**
 
