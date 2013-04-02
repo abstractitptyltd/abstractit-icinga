@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns:ae="http://agavi.org/agavi/config/global/envelope/1.0">
+
+<!--
+	+++ Site configuration file +++
+	
+	This file won't be overwritten
+	
+-->
+
+	<setting name="defaults">
+	<!--
+		<ae:parameter name="auth_create">false</ae:parameter>
+		<ae:parameter name="auth_update">false</ae:parameter>
+		<ae:parameter name="auth_resume">true</ae:parameter>
+		<ae:parameter name="auth_groups">icinga_user</ae:parameter>
+		<ae:parameter name="auth_enable">false</ae:parameter>
+		<ae:parameter name="auth_authoritative">false</ae:parameter>
+	-->
+	</setting>
+
+	<setting name="provider">
+<% if scope.lookupvar('icinga::params::web_auth_type') == 'internal' -%>
+		<ae:parameter name="internal">
+			<ae:parameter name="auth_module">AppKit</ae:parameter>
+			<ae:parameter name="auth_provider">Auth.Provider.Database</ae:parameter>
+
+			<ae:parameter name="auth_enable">true</ae:parameter>
+			<ae:parameter name="auth_authoritative">true</ae:parameter>
+		</ae:parameter>
+<% elsif scope.lookupvar('icinga::params::web_auth_type') == 'httpbasic' -%>
+		<ae:parameter name="http-basic-authentication">
+			<ae:parameter name="auth_module">AppKit</ae:parameter>
+			<ae:parameter name="auth_provider">Auth.Provider.HTTPBasicAuthentication</ae:parameter>
+			<ae:parameter name="auth_enable">true</ae:parameter>
+			<ae:parameter name="auth_authoritative">true</ae:parameter>
+			<ae:parameter name="http_uservar">REMOTE_USER,PHP_AUTH_USER,REDIRECT_REMOTE_USER</ae:parameter>
+			<ae:parameter name="http_typevar">AUTH_TYPE</ae:parameter>
+			<ae:parameter name="http_source">_SERVER</ae:parameter>
+			<ae:parameter name="http_realm">Icinga Access</ae:parameter>
+		</ae:parameter>
+<% elsif scope.lookupvar('icinga::params::web_auth_type') == 'ldap' -%>
+		<ae:parameter name="<%= scope.lookupvar('icinga::params::web_auth_name') %>">
+			<ae:parameter name="auth_module">AppKit</ae:parameter>
+			<ae:parameter name="auth_provider">Auth.Provider.LDAP</ae:parameter>
+			<ae:parameter name="auth_enable">true</ae:parameter>
+			<ae:parameter name="auth_authoritative">true</ae:parameter>
+			<ae:parameter name="auth_create">true</ae:parameter>
+			<ae:parameter name="auth_update">true</ae:parameter>
+			<ae:parameter name="auth_map">
+				<ae:parameter name="user_firstname"><%= scope.lookupvar('icinga::params::ldap_firstname') %></ae:parameter>
+				<ae:parameter name="user_lastname"><%= scope.lookupvar('icinga::params::ldap_lastname') %></ae:parameter>
+				<ae:parameter name="user_email"><%= scope.lookupvar('icinga::params::ldap_email') %></ae:parameter> 
+			</ae:parameter>
+			<ae:parameter name="ldap_dsn">ldap<% if scope.lookupvar('icinga::params::ldap_ssl') == true %>s<% end %>://<%= scope.lookupvar('icinga::params::ldap_server') %>/</ae:parameter>
+			<ae:parameter name="ldap_start_tls"><% if scope.lookupvar('icinga::params::ldap_tls') == true %>true<% else %>false<% end %></ae:parameter>
+			<ae:parameter name="ldap_basedn"><%= scope.lookupvar('icinga::params::ldap_basedn') %></ae:parameter>
+			<ae:parameter name="ldap_binddn"><%= scope.lookupvar('icinga::params::ldap_binddn') %></ae:parameter>
+			<ae:parameter name="ldap_bindpw"><![CDATA[<%= scope.lookupvar('icinga::params::ldap_bindpw') %>]]></ae:parameter>
+			<ae:parameter name="ldap_userattr"><%= scope.lookupvar('icinga::params::ldap_userattr') %></ae:parameter>
+			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= scope.lookupvar('icinga::params::ldap_userattr') %>=__USERNAME__)<%= scope.lookupvar('icinga::params::ldap_filter_extra') %>)]]></ae:parameter>
+		</ae:parameter>
+<% end -%>
+   	</setting>
+
+	<setting name="message">
+	<!--
+		<ae:parameter name="show">true</ae:parameter>
+		<ae:parameter name="title">¡Hola</ae:parameter>
+		<ae:parameter name="text">Soy no persona muy importante</ae:parameter>
+		<ae:parameter name="include_file"></ae:parameter>
+		<ae:parameter name="expand_first">false</ae:parameter>
+	-->
+	</setting>
+	
+</settings>

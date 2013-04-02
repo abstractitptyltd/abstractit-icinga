@@ -1,0 +1,7 @@
+   Order allow,deny
+   Allow from all
+   AuthName "Icinga Access"
+   AuthType Basic
+   AuthUserFile /etc/auth/htpasswd.users
+   AuthGroupFile /etc/auth/htpasswd.groups
+   Require valid-user

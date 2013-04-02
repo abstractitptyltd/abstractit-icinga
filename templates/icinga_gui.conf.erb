@@ -9,7 +9,7 @@
         ServerName <%= scope.lookupvar('icinga::params::webhostname') %>
         CustomLog <%= logroot %>/icinga-access_log combined
         ErrorLog <%= logroot %>/icinga-error_log
-        DirectoryIndex index.php
+        DirectoryIndex index.html
 
 ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi"
 
@@ -17,13 +17,7 @@ ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %
 #  SSLRequireSSL
    Options ExecCGI
    AllowOverride None
-   Order allow,deny
-   Allow from all
-   AuthName "Icinga Access"
-   AuthType Basic
-   AuthUserFile /etc/auth/htpasswd.users
-   AuthGroupFile /etc/auth/htpasswd.groups
-   Require valid-user
+   <%= scope.lookupvar('icinga::gui::auth_conf') %>
 </Directory>
 
 Alias /icinga "/usr/share/icinga/"
@@ -32,13 +26,7 @@ Alias /icinga "/usr/share/icinga/"
 #  SSLRequireSSL
    Options None
    AllowOverride All
-   Order allow,deny
-   Allow from all
-   AuthName "Icinga Access"
-   AuthType Basic
-   AuthUserFile /etc/auth/htpasswd.users
-   AuthGroupFile /etc/auth/htpasswd.groups
-   Require valid-user
+   <%= scope.lookupvar('icinga::gui::auth_conf') %>
 </Directory>
 </VirtualHost>
 

@@ -1,0 +1,17 @@
+ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi"
+
+<Directory "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi">
+<% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
+   Options ExecCGI
+   AllowOverride None
+   <%= scope.lookupvar('icinga::gui::auth_conf') %>
+</Directory>
+
+Alias /icinga "/usr/share/icinga/"
+
+<Directory "/usr/share/icinga/">
+<% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
+   Options None
+   AllowOverride All
+   <%= scope.lookupvar('icinga::gui::auth_conf') %>
+</Directory>

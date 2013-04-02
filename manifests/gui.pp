@@ -9,52 +9,86 @@ class icinga::gui {
   $ro_users = $icinga::params::ro_users
   $ro_group = $icinga::params::ro_group
 
-  package { 'icinga-gui':
-    ensure => installed,
+  $auth_conf = template($icinga::params::auth_template)
+  $classic_conf = template("icinga/gui_classic_conf.erb")
+  $web_conf = template("icinga/gui_web_conf.erb")
+
+  if $icinga::params::gui_type =~ /^(classic|both)$/ {
+    file { "icingacgicfg":
+      name  => "/etc/icinga/cgi.cfg",
+      owner  => icinga,
+      group  => icinga,
+      mode  => 644,
+      content  => template("icinga/cgi.cfg.erb"),
+    }
+    file { "/var/log/icinga/gui":
+      ensure  => directory,
+      owner  => icinga,
+      group  => icingacmd,
+      mode  => 2775,
+    }
   }
 
-  file { "icingacgicfg":
-    name  => "/etc/icinga/cgi.cfg",
-    owner  => icinga,
-    group  => icinga,
-    mode  => 644,
-    content  => template("icinga/cgi.cfg.erb"),
+  ## need to setup an exec to clean the web cache if these files change
+  ## needs to run /usr/bin/icinga-web-clearcache
+  if $icinga::params::gui_type =~ /^(web|both)$/ {
+    file { "/etc/icinga-web/conf.d/databases.xml":
+      owner => root,
+      group => root,
+      mode => 644,
+      content => template('icinga/databases.xml.erb'),
+    }
+    file { "/etc/icinga-web/conf.d/auth.xml":
+      owner => root,
+      group => root,
+      mode => 644,
+      content => template('icinga/auth.xml.erb'),
+    }
+    file { "/var/cache/icinga-web":
+      ensure  => directory,
+      owner  => apache,
+      group  => apache,
+      mode  => 775,
+    }
+    file { "/var/log/icinga/web":
+      ensure  => directory,
+      owner  => icinga,
+      group  => icingacmd,
+      mode  => 2775,
+    }
   }
 
   apache::vhost { $icinga::params::webhostname:
     port => $icinga::params::web_port,
-    docroot => '/usr/share/icinga/',
+    docroot => $icinga::params::gui_type ? { default => '/usr/share/icinga/', 'web' => '/usr/share/icinga-web/pub' },
     docroot_owner => root,
     docroot_group => root,
-    template => "icinga/icinga_gui.conf.erb",
+    template => "icinga/apache.conf.erb",
     configure_firewall => $icinga::params::configure_firewall,
   }
 
-  if ($icinga::params::ssl == true) {
+  if ( $icinga::params::ssl == true ) {
     include apache::ssl
-    file { "ssl_key_${icinga::params::webhostname}":
-      name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",
-      owner   => root,
-      group   => root,
-      mode  => 644,
-      source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
-      notify  => Service[httpd],
+    if ! defined(File["ssl_key_${icinga::params::webhostname}"]) {
+      if ( $icinga::params::manage_ssl == true ) {
+        file { "ssl_key_${icinga::params::webhostname}":
+          name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",
+          owner   => root,
+          group   => root,
+          mode  => 644,
+          source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
+          notify  => Service[httpd],
+        }
+        file { "ssl_crt_${icinga::params::webhostname}":
+          name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
+          owner   => root,
+          group   => root,
+          mode  => 644,
+          source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.crt",
+          notify  => Service[httpd],
+        }
+      }
     }
-    file { "ssl_crt_${icinga::params::webhostname}":
-      name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
-      owner   => root,
-      group   => root,
-      mode  => 644,
-      source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.crt",
-      notify  => Service[httpd],
-    }
-  }
-
-  file { "/var/log/icinga/gui":
-    ensure  => directory,
-    owner  => icinga,
-    group  => icingacmd,
-    mode  => 2775,
   }
 
 }

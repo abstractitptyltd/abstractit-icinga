@@ -892,7 +892,7 @@ accept_passive_host_checks=1
 # service notifications when it is initially (re)started.
 # Values: 1 = enable notifications, 0 = disable notifications
 
-enable_notifications=<% if @notifications == true %>1<% else %>0<% end %>
+enable_notifications=<%= scope.function_bool2num([@notifications]) %>
 
 
 
