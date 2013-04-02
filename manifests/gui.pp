@@ -69,8 +69,8 @@ class icinga::gui {
 
   if ( $icinga::params::ssl == true ) {
     include apache::ssl
-    if ! defined(File["ssl_key_${icinga::params::webhostname}"]) {
-      if ( $icinga::params::manage_ssl == true ) {
+    if ( $icinga::params::manage_ssl == true ) {
+      if ! defined(File["ssl_key_${icinga::params::webhostname}"]) {
         file { "ssl_key_${icinga::params::webhostname}":
           name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",
           owner   => root,
@@ -79,6 +79,8 @@ class icinga::gui {
           source  => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
           notify  => Service[httpd],
         }
+      }
+      if ! defined(File["ssl_crt_${icinga::params::webhostname}"]) {
         file { "ssl_crt_${icinga::params::webhostname}":
           name  => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
           owner   => root,
