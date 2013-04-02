@@ -58,7 +58,7 @@ class icinga::params (
   # validate some params
   validate_re($gui_type, '^(classic|web|both|none)$',
   "${gui_type} is not supported for gui_type.
-  Allowed values are 'classic', 'web', and 'none'.")
+  Allowed values are 'classic', 'web', 'both' and 'none'.")
   # validate auth params
   validate_re($web_auth_type, '^(internal|httpbasic|ldap|none)$',
   "${web_auth_type} is not supported for web_auth_type.
