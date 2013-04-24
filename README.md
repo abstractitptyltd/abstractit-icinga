@@ -160,6 +160,12 @@ If you wish to join in let me know.
 Release Notes
 -------------
 
+**1.1.0**
+
+Adding performance data processing with pnp4nagios.
+Added ldap auth for clasic gui.
+Fixed a bunch of bugs.
+
 **1.0.6**
 
 Adding the option of setting up the new web interface and or the classic one
