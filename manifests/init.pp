@@ -13,4 +13,7 @@ class icinga {
   } else {
     notice("no gui selected")
   }
+  if ( $icinga::params::perfdata == true and $icinga::params::perfdatatype == 'pnp4nagios' ) {
+    include pnp4nagios
+  }
 }

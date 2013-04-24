@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns:ae="http://agavi.org/agavi/config/global/envelope/1.0">
-
 <!--
 	+++ Site configuration file +++
-	
 	This file won't be overwritten
-	
 -->
-
 	<setting name="defaults">
 	<!--
 		<ae:parameter name="auth_create">false</ae:parameter>
@@ -52,13 +48,17 @@
 				<ae:parameter name="user_lastname"><%= scope.lookupvar('icinga::params::ldap_lastname') %></ae:parameter>
 				<ae:parameter name="user_email"><%= scope.lookupvar('icinga::params::ldap_email') %></ae:parameter> 
 			</ae:parameter>
-			<ae:parameter name="ldap_dsn">ldap<% if scope.lookupvar('icinga::params::ldap_ssl') == true %>s<% end %>://<%= scope.lookupvar('icinga::params::ldap_server') %>/</ae:parameter>
-			<ae:parameter name="ldap_start_tls"><% if scope.lookupvar('icinga::params::ldap_tls') == true %>true<% else %>false<% end %></ae:parameter>
+			<ae:parameter name="ldap_dsn">ldap<% if scope.lookupvar('icinga::params::ldap_security') == 'ssl' %>s<% end %>://<%= scope.lookupvar('icinga::params::ldap_server') %>/</ae:parameter>
+			<ae:parameter name="ldap_start_tls"><% if scope.lookupvar('icinga::params::ldap_security') == 'tls' %>true<% else %>false<% end %></ae:parameter>
 			<ae:parameter name="ldap_basedn"><%= scope.lookupvar('icinga::params::ldap_basedn') %></ae:parameter>
 			<ae:parameter name="ldap_binddn"><%= scope.lookupvar('icinga::params::ldap_binddn') %></ae:parameter>
 			<ae:parameter name="ldap_bindpw"><![CDATA[<%= scope.lookupvar('icinga::params::ldap_bindpw') %>]]></ae:parameter>
 			<ae:parameter name="ldap_userattr"><%= scope.lookupvar('icinga::params::ldap_userattr') %></ae:parameter>
+<% if scope.lookupvar('icinga::params::ldap_auth_group') -%>
+			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= scope.lookupvar('icinga::params::ldap_userattr') %>=__USERNAME__)(<%= scope.lookupvar('icinga::params::ldap_groupattr') %>=<%= scope.lookupvar('icinga::params::ldap_auth_group') %>))]]></ae:parameter>
+<% else -%>
 			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= scope.lookupvar('icinga::params::ldap_userattr') %>=__USERNAME__)<%= scope.lookupvar('icinga::params::ldap_filter_extra') %>)]]></ae:parameter>
+<% end -%>
 		</ae:parameter>
 <% end -%>
    	</setting>

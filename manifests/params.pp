@@ -12,6 +12,8 @@ class icinga::params (
   $auth_template = "icinga/icinga_auth_conf.erb",
   $notifications = 1,
   $embedded_perl = 0,
+  $perfdata = true,
+  $perfdatatype = 'pnp4nagios',
   $admin_group = undef,
   $admin_users = undef,
   $ro_users = undef,
@@ -36,17 +38,19 @@ class icinga::params (
   $web_db_pass = 'icinga_web',
   $web_auth_type = 'internal',
   $web_auth_name = "user_defined_1",
-  $ldap_ssl = false,
-  $ldap_tls = true,
+  $ldap_security = 'tls',
   $ldap_server = "ldap.${domain}",
   $ldap_firstname = 'givenName',
   $ldap_lastname = 'sn',
   $ldap_email = 'mail',
   $ldap_basedn = undef,
+  $ldap_groupdn = undef,
   $ldap_binddn = undef,
   $ldap_bindpw = undef,
   $ldap_userattr = uid,
+  $ldap_groupattr = memberOf,
   $ldap_filter_extra = undef,
+  $ldap_auth_group = undef,
 ) {
   $nagios_plugins = $architecture ? { 'x86_64' => '/usr/lib64/nagios/plugins', default => '/usr/lib/nagios/plugins'}
   $nagios_extra_plugins = hiera('monitoring::params::nagios_extra_plugins', undef)
@@ -63,5 +67,8 @@ class icinga::params (
   validate_re($web_auth_type, '^(internal|httpbasic|ldap|none)$',
   "${web_auth_type} is not supported for web_auth_type.
   Allowed values are 'internal', 'httpbasic', 'ldap' and 'none'.")
+  validate_re($ldap_security, '^(tls|ssl|none)$',
+  "${ldap_security} is not supported for ldap_security.
+  Allowed values are 'tls', 'ssl' and 'none'.")
 }
 

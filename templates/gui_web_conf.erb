@@ -10,25 +10,21 @@ Alias /icinga-web/js/ext3 /usr/share/icinga-web/lib/ext3
 Alias /icinga-web /usr/share/icinga-web/pub
 
 <DirectoryMatch /usr/share/icinga-web/app/modules/\w+/pub/styles/>
-	Order allow,deny
-	Allow from all
+<%= scope.lookupvar('icinga::gui::apache_allow_stanza') %>
 </DirectoryMatch>
 
 <DirectoryMatch /usr/share/icinga-web/app/modules/\w+/pub/images/>
-	Order allow,deny
-	Allow from all
+<%= scope.lookupvar('icinga::gui::apache_allow_stanza') %>
 </DirectoryMatch>
 
 
 <Directory /usr/share/icinga-web/lib/ext3>
-	Order allow,deny
-	Allow from all
+<%= scope.lookupvar('icinga::gui::apache_allow_stanza') %>
 </Directory>
 
 <Directory /usr/share/icinga-web/pub>
 	DirectoryIndex index.php
 	Options FollowSymLinks
 	AllowOverride all
-	Order allow,deny
-	Allow from all
+<%= scope.lookupvar('icinga::gui::apache_allow_stanza') %>
 </Directory>

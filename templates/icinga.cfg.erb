@@ -930,9 +930,13 @@ enable_event_handlers=1
 # performance data.
 # Values: 1 = process performance data, 0 = do not process performance data
 
-process_performance_data=0
+process_performance_data=<%= scope.function_bool2num([@perfdata]) %>
 
-
+<% if @perfdata == true -%>
+<% if @perfdatatype == 'pnp4nagios' -%>
+broker_module=/usr/lib64/nagios/brokers/npcdmod.o config_file=/etc/pnp4nagios/npcd.cfg
+<% end -%>
+<% end -%>
 
 # HOST AND SERVICE PERFORMANCE DATA PROCESSING COMMANDS
 # These commands are run after every host and service check is

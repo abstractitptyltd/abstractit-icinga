@@ -5,6 +5,8 @@ class icinga::config {
 
   $notifications = $icinga::params::notifications
   $embedded_perl = $icinga::params::embedded_perl
+  $perfdata = $icinga::params::perfdata
+  $perfdatatype = $icinga::params::perfdatatype
   $admin_group = $icinga::params::admin_group
   $nagios_plugins = $icinga::params::nagios_plugins
   $nagios_extra_plugins = $icinga::params::nagios_extra_plugins

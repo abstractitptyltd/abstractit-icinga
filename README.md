@@ -3,14 +3,34 @@ icinga
 
 ####Table of Contents
 
-1. [Overview - What is the icinga module?](#overview)
-2. [Module Description - What does the module do?](#module-description)
-3. [Setup - The basics of getting started with icinga](#setup)
-4. [Usage - The parameters available for configuration](#usage)
-5. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
-6. [Limitations - OS compatibility, etc.](#limitations)
-7. [Development - Guide for contributing to the module](#development)
-8. [Release Notes - Notes on the most recent updates to the module](#release-notes)
+0. [Breaking Changes](#changes)
+1. [New stuff and bug fixes](#new)
+2. [Overview - What is the icinga module?](#overview)
+3. [Module Description - What does the module do?](#module-description)
+4. [Setup - The basics of getting started with icinga](#setup)
+5. [Usage - The parameters available for configuration](#usage)
+6. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
+7. [Limitations - OS compatibility, etc.](#limitations)
+8. [Development - Guide for contributing to the module](#development)
+9. [Release Notes - Notes on the most recent updates to the module](#release-notes)
+
+Breaking Changes
+----------------
+
+I added support for using ldap auth for the classic web gui and needed to make some changes to the ldap variables.
+I have added a new var `$ldap_security` to the params class. This is used to set which security method to use when talking to ldap. Accepted values are tls ssl or none
+I have also added vars for setting the base group dn for authentication `$ldap_groupdn`.
+The `$ldap_auth_group` is used to tell ldap which group to restrict access to.
+You can still use the `$ldap_filter` variable but apache auth may not work and it will be an extra filter to add to auth checking.
+
+New stuff and bug fixes
+-----------------------
+
+I have added support for graphing performance data with pnp4nagios (also published as a module for that as well)
+If you don't want this cool feature set `$icinga::params::perfdata` to false and it won't get setup for you.
+I also had some issues with access rights in the new gui. Those should be fixed now.
+I also fixed an issue with the database port for Postgres not getting set. If it isn't set it will now use the default.
+I have also added some fixes for apache 2.4.
 
 Overview
 --------
@@ -109,8 +129,7 @@ ldap uses the options below to setup authentication
 
 set these if you want to use ldap auth via openldap, FreeIPA  or Active Directory
 
-    $ldap_ssl = false,
-    $ldap_tls = true,
+    $ldap_security = tls,
     $ldap_server = "ldap.${domain}",
     $ldap_firstname = 'givenName',
     $ldap_lastname = 'sn',

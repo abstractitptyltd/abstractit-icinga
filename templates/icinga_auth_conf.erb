@@ -1,7 +1,21 @@
-   Order allow,deny
-   Allow from all
-   AuthName "Icinga Access"
-   AuthType Basic
-   AuthUserFile /etc/auth/htpasswd.users
-   AuthGroupFile /etc/auth/htpasswd.groups
-   Require valid-user
+<%= scope.lookupvar('icinga::gui::apache_allow_stanza') %>
+    AuthName "Icinga Access"
+    AuthType Basic
+<% if scope.lookupvar('icinga::params::web_auth_type') == 'ldap' -%>
+    AuthBasicProvider ldap
+    AuthLDAPRemoteUserAttribute <%= scope.lookupvar('icinga::params::ldap_userattr') %>
+##    AuthLDAPGroupAttribute <%= scope.lookupvar('icinga::params::ldap_groupattr') %>
+    AuthLDAPURL "ldap<% if scope.lookupvar('icinga::params::ldap_security') == 'ssl' %>s<% end %>://<%= scope.lookupvar('icinga::params::ldap_server') %>/<%= scope.lookupvar('icinga::params::ldap_groupdn') %>?<%= scope.lookupvar('icinga::params::ldap_userattr') %>"
+    <% if scope.lookupvar('icinga::params::ldap_auth_group') -%>
+    require ldap-group "<%= scope.lookupvar('icinga::params::ldap_auth_group') %>"
+    <% end -%>
+    <% if scope.lookupvar('icinga::params::ldap_filter_extra') != 'undef' -%>
+    <% else -%>
+    require ldap-filter "<%= scope.lookupvar('icinga::params::ldap_filter_extra') %>"
+    <% end -%>
+<% else %>
+    AuthType Basic
+    AuthUserFile /etc/auth/htpasswd.users
+    AuthGroupFile /etc/auth/htpasswd.groups
+<% end -%>
+    Require valid-user

@@ -8,10 +8,29 @@ class icinga::gui {
   $admin_group = $icinga::params::admin_group
   $ro_users = $icinga::params::ro_users
   $ro_group = $icinga::params::ro_group
+  # check if we are running pgsql and fix port if it is set to default mysql port
+  if $icinga::params::web_db_server == 'pgsql' and $icinga::params::web_db_port == 3306 {
+    $web_db_port = 5432
+  } else {
+    $web_db_port = $icinga::params::web_db_port
+  }
 
+  # check if we are running pgsql and fix port if it is set to default mysql port
+  if $icinga::params::ido_db_server == 'pgsql' and $icinga::params::ido_db_port == 3306 {
+    $ido_db_port = 5432
+  } else {
+    $ido_db_port = $icinga::params::ido_db_port
+  }
+
+  if $operatingsystem == 'Fedora' and $operatingsystemrelease >= 18 {
+    $apache_allow_stanza = "    Require all granted\n"
+  } else {
+    $apache_allow_stanza = "    Order allow,deny\n    Allow from all\n"
+  }
   $auth_conf = template($icinga::params::auth_template)
   $classic_conf = template("icinga/gui_classic_conf.erb")
   $web_conf = template("icinga/gui_web_conf.erb")
+  $pnp4nagios_conf = template("icinga/pnp4nagios_apache.erb")
 
   if $icinga::params::gui_type =~ /^(classic|both)$/ {
     file { "icingacgicfg":
@@ -44,6 +63,15 @@ class icinga::gui {
       mode => 644,
       content => template('icinga/auth.xml.erb'),
     }
+    /*
+    # this still needs work
+    file { "/etc/icinga-web/conf.d/access.xml":
+      owner => root,
+      group => root,
+      mode => 644,
+      content => template('icinga/access.xml.erb'),
+    }
+    */
     file { "/var/cache/icinga-web":
       ensure  => directory,
       owner  => apache,
