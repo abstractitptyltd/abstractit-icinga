@@ -21,9 +21,9 @@ class icinga::install {
 
   $icigna_packages = ['icinga', 'icinga-docs', 'icinga-idoutils', "libdbd-${db}", 'nagios-plugins']
 
-  $ubuntu_web_packages = ['php5', 'php5-cli', 'php-pear', 'php5-xmlrpc', 'php5-xsl', 'php5-gd', 'php5-ldap', 'php5-${db}']
+  $ubuntu_web_packages = ['php5', 'php5-cli', 'php-pear', 'php5-xmlrpc', 'php5-xsl', 'php5-gd', 'php5-ldap', "php5-${db}"]
 
-  $default_web_packages = ['php-soap', 'php-gd', 'php-ldap', 'php-mysql']
+  $default_web_packages = ['php-soap', 'php-gd', 'php-ldap', "php-${db}"]
 
   package { $icinga_packages:
     ensure => latest,
