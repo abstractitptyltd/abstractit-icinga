@@ -55,10 +55,10 @@ class icinga::params (
   $nagios_plugins = $architecture ? { 'x86_64' => '/usr/lib64/nagios/plugins', default => '/usr/lib/nagios/plugins'}
   $nagios_extra_plugins = hiera('monitoring::params::nagios_extra_plugins', undef)
   $icinga_cmd_grp = 'icingacmd'
-  $db_password = hiera('monitoring::db_password')
-  $email_user = hiera('monitoring::email_user')
-  $email_password = hiera('monitoring::email_password')
-  $ssl_cert_source = hiera('ssl_cert_source')
+  $db_password = hiera('monitoring::db_password', undef)
+  $email_user = hiera('monitoring::email_user', undef)
+  $email_password = hiera('monitoring::email_password', undef)
+  $ssl_cert_source = hiera('ssl_cert_source', undef)
   # validate some params
   validate_re($gui_type, '^(classic|web|both|none)$',
   "${gui_type} is not supported for gui_type.

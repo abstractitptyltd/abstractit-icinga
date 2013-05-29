@@ -1,19 +1,48 @@
-
 class icinga::install {
 
   include icinga::params
   $ido_db_server = $icinga::params::ido_db_server
 
-  package { ['icinga',"icinga-idoutils-libdbi-${ido_db_server}"]:
-    ensure => installed,
+  if $ido_db_server == 'postgresql' {
+    $db = 'pgsql'
   }
-  if ( $icinga::params::gui_type =~ /^(classic|both)$/ ) { 
-      package { 'icinga-gui': ensure => installed }
-  }
-  if ( $icinga::params::gui_type =~ /^(web|both)$/ ) { 
-      package { 'icinga-web': ensure => installed }
-      package { ['php-soap','php-gd','php-ldap','php-mysql']: ensure => installed }
+  else {
+    $db = 'mysql'
   }
 
+  $icinga_packages = ['icinga', 'icinga-docs', 'icinga-idoutils', "libdbd-${db}", 'nagios-plugins']
+
+  $ubuntu_web_packages = ['php5', 'php5-cli', 'php-pear', 'php5-xmlrpc', 'php5-xsl', 'php5-gd', 'php5-ldap', "php5-${db}"]
+
+  $default_web_packages = ['php-soap', 'php-gd', 'php-ldap', "php-${db}"]
+
+  if $operatingsystem == 'Ubuntu' {
+    apt::ppa { 'ppa:formorer/icinga':
+      before => Package[$icinga_packages]
+    }
+    apt::ppa { 'ppa:formorer/icinga-web':
+      before => Package[$ubuntu_web_packages]
+    }
+  }
+
+  package { $icinga_packages:
+    ensure => latest,
+  }
+
+  if ( $icinga::params::gui_type =~ /^(classic|both)$/ ) { 
+    package { 'icinga-gui': ensure => latest }
+  }
+
+  if ( $icinga::params::gui_type =~ /^(web|both)$/ ) { 
+    package { 'icinga-web': ensure => latest }
+    case $operatingsystem {
+      'Ubuntu': { package { $ubuntu_web_packages:
+                    ensure => latest,
+                  }
+                }
+      default: { package { $default_web_packages:
+                    ensure => latest, } }
+    }
+  }
 }
 
