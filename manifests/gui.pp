@@ -1,7 +1,7 @@
 
 class icinga::gui {
 
-  include apache
+  require apache
   include apache::mod::php
   include icinga::params
   $admin_users = $icinga::params::admin_users
