@@ -19,7 +19,7 @@ class icinga::install {
     $db = 'mysql'
   }
 
-  $icigna_packages = ['icinga', 'icinga-docs', 'icinga-idoutils', "libdbd-${db}", 'nagios-plugins']
+  $icinga_packages = ['icinga', 'icinga-docs', 'icinga-idoutils', "libdbd-${db}", 'nagios-plugins']
 
   $ubuntu_web_packages = ['php5', 'php5-cli', 'php-pear', 'php5-xmlrpc', 'php5-xsl', 'php5-gd', 'php5-ldap', "php5-${db}"]
 
