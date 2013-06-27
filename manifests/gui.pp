@@ -4,6 +4,9 @@ class icinga::gui {
   include apache
   include apache::mod::php
   include icinga::params
+  $icinga_user = $icinga::params::icinga_user
+  $icinga_group = $icinga::params::icinga_group
+  $icinga_cmd_grp = $icinga::params::icinga_cmd_grp
   $admin_users = $icinga::params::admin_users
   $admin_group = $icinga::params::admin_group
   $ro_users = $icinga::params::ro_users
@@ -35,15 +38,15 @@ class icinga::gui {
   if $icinga::params::gui_type =~ /^(classic|both)$/ {
     file { "icingacgicfg":
       name    => "/etc/icinga/cgi.cfg",
-      owner   => icinga,
-      group   => icinga,
+      owner   => $icinga_user,
+      group   => $icinga_group,
       mode    => 644,
       content => template("icinga/cgi.cfg.erb"),
     }
     file { "/var/log/icinga/gui":
       ensure => directory,
-      owner  => icinga,
-      group  => icingacmd,
+      owner  => $icinga_user,
+      group  => $icinga_cmd_grp,
       mode   => 2775,
     }
   }
@@ -74,14 +77,14 @@ class icinga::gui {
     */
     file { "/var/cache/icinga-web":
       ensure => directory,
-      owner  => apache,
-      group  => apache,
+      owner  => $apache::params::user,
+      group  => $apache::params::group,
       mode   => 775,
     }
     file { "/var/log/icinga/web":
       ensure => directory,
-      owner  => icinga,
-      group  => icingacmd,
+      owner  => $icinga_user,
+      group  => $icinga_cmd_grp,
       mode   => 2775,
     }
   }

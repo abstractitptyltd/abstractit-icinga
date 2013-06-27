@@ -2,6 +2,8 @@
 class icinga::params (
   $web_ip = $ipaddress,
   $web_port = 443,
+  $icinga_user = 'icinga',
+  $icinga_group = 'icinga',
   $ssl = true,
   $ssl_cacrt = undef,
   $ssl_cypher_list = 'ALL:!ADH:RC4+RSA:+HIGH:!MEDIUM:!LOW:!SSLv2:+SSLv3:+TLSv1:!EXP:!eNULL',
