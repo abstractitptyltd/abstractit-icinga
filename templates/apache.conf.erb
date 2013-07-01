@@ -10,8 +10,14 @@ LDAPOpCacheEntries 1024
 LDAPOpCacheTTL 600
 <% end -%>
 
-##<% if scope.lookupvar('icinga::params::web_port') =~ /^(80|443)$/ %><% else %>Listen <%= scope.lookupvar('icinga::params::web_ip') %>:<%= scope.lookupvar('icinga::params::web_port') %><% end %>
+<%# hack for now: assume the server already listens on 80, but no other port.
+   Necessary because duplicate Listen directives cause errors and confusion and
+   misery. #%>
+
+<% if scope.lookupvar('icinga::params::web_port') != '80' -%>
 Listen <%= scope.lookupvar('icinga::params::web_ip') %>:<%= scope.lookupvar('icinga::params::web_port') %>
+<% end -%>
+
 <VirtualHost <%= scope.lookupvar('icinga::params::web_ip') %>:<%= scope.lookupvar('icinga::params::web_port') %>>
 <% if scope.lookupvar('icinga::params::ssl') == true -%>
 SSLEngine on
