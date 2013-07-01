@@ -1,5 +1,5 @@
 
-<% if scope.lookupvar('icinga::params::web_auth_type') == 'ldap'
+<% if scope.lookupvar('icinga::params::web_auth_type') == 'ldap' \
    && scope.lookupvar('icinga::params::ldap_security') =~ /(tls|ssl)/ -%>
 LDAPVerifyServerCert Off
 LDAPTrustedMode <% if scope.lookupvar('icinga::params::ldap_security') == 'tls' %>TLS<% else %>SSL<% end %>
