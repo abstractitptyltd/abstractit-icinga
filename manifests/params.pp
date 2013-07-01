@@ -4,6 +4,9 @@ class icinga::params (
   $web_port = 443,
   $icinga_user = 'icinga',
   $icinga_group = 'icinga',
+  $icinga_cgi_path = '',
+  $icinga_html_path = '',
+  $icinga_css_path = '',
   $ssl = true,
   $ssl_cacrt = undef,
   $ssl_cypher_list = 'ALL:!ADH:RC4+RSA:+HIGH:!MEDIUM:!LOW:!SSLv2:+SSLv3:+TLSv1:!EXP:!eNULL',
@@ -54,13 +57,64 @@ class icinga::params (
   $ldap_filter_extra = undef,
   $ldap_auth_group = undef,
 ) {
-  $nagios_plugins = $architecture ? { 'x86_64' => '/usr/lib64/nagios/plugins', default => '/usr/lib/nagios/plugins'}
+  if $::architecture == 'x86_64' && $::osfamily == 'RedHat' {
+    $nagios_plugins = '/usr/lib64/nagios/plugins'
+  } else {
+    $nagios_plugins = '/usr/lib/nagios/plugins'
+  }
   $nagios_extra_plugins = hiera('monitoring::params::nagios_extra_plugins', undef)
   $icinga_cmd_grp = 'icingacmd'
   $db_password = hiera('monitoring::db_password')
   $email_user = hiera('monitoring::email_user')
   $email_password = hiera('monitoring::email_password')
   $ssl_cert_source = hiera('ssl_cert_source')
+  case $::osfamily {
+    'RedHat': {
+      if $icinga_cgi_path == '' {
+        $icinga_cgi_path_real = $::architecture ? {
+          'x86_64' => '/usr/lib64/icinga/cgi',
+          default  => '/usr/lib/icinga/cgi'
+        }
+      }
+      else {
+        $icinga_cgi_path_real = $icinga_cgi_path
+      }
+
+      if $icinga_html_path == '' {
+        $icinga_html_path_real = '/usr/share/icinga'
+      }
+      else {
+        $icinga_html_path_real = $icinga_html_path
+      }
+
+      $icinga_css_path_real = $icinga_css_path
+    }
+    'Debian': {
+      if $icinga_cgi_path == '' {
+        $icinga_cgi_path_real = '/usr/lib/cgi-bin/icinga'
+      }
+      else {
+        $icinga_cgi_path_real = $icinga_cgi_path
+      }
+
+      if $icinga_html_path == '' {
+        $icinga_html_path_real = '/usr/share/icinga/htdocs'
+      }
+      else {
+        $icinga_html_path_real = $icinga_html_path
+      }
+
+      if $icinacss == '' {
+        $icinga_css_path_real = '/etc/icinga/stylesheets'
+      }
+      else {
+        $icinga_css_path_real = $icinga_css_path_real
+      }
+    }
+    default: {
+      fail("Only Debian/Red Hat based systems supported, not ${::osfamily}")
+    }
+  }
   # validate some params
   validate_re($gui_type, '^(classic|web|both|none)$',
   "${gui_type} is not supported for gui_type.
