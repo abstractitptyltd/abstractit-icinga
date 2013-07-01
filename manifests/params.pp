@@ -58,7 +58,7 @@ class icinga::params (
   $ldap_filter_extra = undef,
   $ldap_auth_group = undef,
 ) {
-  if $::architecture == 'x86_64' && $::osfamily == 'RedHat' {
+  if $::architecture == 'x86_64' and $::osfamily == 'RedHat' {
     $nagios_plugins = '/usr/lib64/nagios/plugins'
   } else {
     $nagios_plugins = '/usr/lib/nagios/plugins'
