@@ -19,6 +19,7 @@ class icinga::params (
   $embedded_perl = 0,
   $perfdata = true,
   $perfdatatype = 'pnp4nagios',
+  $pnp4nagios_html_path = '',
   $admin_group = undef,
   $admin_users = undef,
   $ro_users = undef,
@@ -88,6 +89,13 @@ class icinga::params (
       }
 
       $icinga_css_path_real = $icinga_css_path
+
+      if $pnp4nagios_html_path == '' {
+        $pnp4nagios_html_path_real = '/usr/share/nagios/html/pnp4nagios'
+      }
+      else {
+        $pnp4nagios_html_path_real = $pnp4nagios_html_path
+      }
     }
     'Debian': {
       if $icinga_cgi_path == '' {
@@ -109,6 +117,13 @@ class icinga::params (
       }
       else {
         $icinga_css_path_real = $icinga_css_path_real
+      }
+
+      if $pnp4nagios_html_path == '' {
+        $pnp4nagios_html_path_real = '/usr/share/pnp4nagios/html'
+      }
+      else {
+        $pnp4nagios_html_path_real = $pnp4nagios_html_path
       }
     }
     default: {
