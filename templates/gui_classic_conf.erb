@@ -1,17 +1,27 @@
-ScriptAlias /icinga/cgi-bin "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi"
+ScriptAlias /icinga/cgi-bin "<%= scope.lookupvar("icinga::params::icinga_cgi_path_real") %>"
 
-<Directory "/usr/lib<% if architecture == 'x86_64' %>64<% end %>/icinga/cgi">
+<Directory "<%= scope.lookupvar("icinga::params:icinga_cgi_path_real")%>">
 <% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
    Options ExecCGI
    AllowOverride None
    <%= scope.lookupvar('icinga::gui::auth_conf') %>
 </Directory>
 
-Alias /icinga "/usr/share/icinga/"
+Alias /icinga "<%= scope.lookupvar("icinga::params::icinga_html_path_real") %>"
 
-<Directory "/usr/share/icinga/">
-<% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
-   Options None
+<% if scope.lookupvar("icinga::params::icinga_css_path_real") != '' -%>
+<Directory "<%= scope.lookupvar("icinga::params::icinga_css_path_real") %>">
+   Options FollowSymlinks
    AllowOverride All
+   DirectoryIndex index.html
+<%= scope.lookupvar('icinga::gui::auth_conf') %>
+</Directory>
+<% end -%>
+
+<Directory "<%= scope.lookupvar("icinga::params::icinga_html_path_real") %>">
+<% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
+   Options FollowSymlinks
+   AllowOverride All
+   DirectoryIndex index.html
 <%= scope.lookupvar('icinga::gui::auth_conf') %>
 </Directory>

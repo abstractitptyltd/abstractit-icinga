@@ -1,8 +1,8 @@
 # SAMPLE CONFIG SNIPPETS FOR APACHE WEB SERVER
 
-Alias /pnp4nagios "/usr/share/nagios/html/pnp4nagios"
+Alias /pnp4nagios "<%= scope.lookupvar("icinga::params::pnp4nagios_html_path_real") %>"
 
-<Directory "/usr/share/nagios/html/pnp4nagios">
+<Directory "<%= scope.lookupvar("icinga::params::pnp4nagios_html_path_real") %>">
    	AllowOverride None
 <%= scope.lookupvar('icinga::gui::auth_conf') %>
 	<IfModule mod_rewrite.c>

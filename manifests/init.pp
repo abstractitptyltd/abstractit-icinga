@@ -6,7 +6,7 @@ class icinga {
   class{'icinga::idoservice':} ->
   class{'icinga::config':} ~>
   class{'icinga::service':} ->
-  Class["icinga"] 
+  Class["icinga"]
 
   if ( $icinga::params::gui_type =~ /^(classic|web|both)$/ ) {
     include icinga::gui
