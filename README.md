@@ -17,6 +17,12 @@ icinga
 Breaking Changes
 ----------------
 
+More fixing changes. We now have officially tested support for Debian and Ubuntu thanks to Josh Holland (@jshholland)
+
+
+Old News
+--------
+
 I added support for using ldap auth for the classic web gui and needed to make some changes to the ldap variables.
 I have added a new var `$ldap_security` to the params class. This is used to set which security method to use when talking to ldap. Accepted values are tls ssl or none
 I have also added vars for setting the base group dn for authentication `$ldap_groupdn`.
@@ -150,15 +156,23 @@ Limitations
 ------------
 
 There may be some. Don't hesitate to let me know if you find any.
+OS support has only been tested where $osfamily == /(RedHat|Debian)/
 
 Development
 -----------
 
-All development, testing and releasing is done by me at this stage.
-If you wish to join in let me know.
+Development team consists of Pete Brown (@rendhalver) and Josh Holland (@jshholland)
+The module was started by Pete on a whim because I wanted to switch away from nagios.
+Josh is responsible for making sure the module supports Debian and Ubuntu.
+If you would like support for another OS and are willing to help test it let us know.
+
 
 Release Notes
 -------------
+
+**1.1.0**
+
+Support for Debian/Ubuntu provided by  Josh Holland (@jshholland on Github)
 
 **1.1.0**
 
