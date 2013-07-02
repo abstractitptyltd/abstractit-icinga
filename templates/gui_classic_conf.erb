@@ -1,4 +1,4 @@
-ScriptAlias /icinga/cgi-bin "<%= scope.lookupvar("icinga::params::icinga_cgi_path_real") %>"
+ScriptAlias <%= scope.lookupvar('icinga::params::cgi_url') %> "<%= scope.lookupvar("icinga::params::icinga_cgi_path_real") %>"
 
 <Directory "<%= scope.lookupvar("icinga::params::icinga_cgi_path_real")%>">
 <% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
