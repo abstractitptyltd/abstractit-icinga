@@ -10,6 +10,7 @@ ScriptAlias <%= scope.lookupvar('icinga::params::cgi_url') %> "<%= scope.lookupv
 Alias /icinga "<%= scope.lookupvar("icinga::params::icinga_html_path_real") %>"
 
 <% if scope.lookupvar("icinga::params::icinga_css_path_real") != '' -%>
+Alias /icinga/stylesheets "<%= scope.lookupvar("icinga::params::icinga_css_path_real") %>"
 <Directory "<%= scope.lookupvar("icinga::params::icinga_css_path_real") %>">
    Options FollowSymlinks
    AllowOverride All
