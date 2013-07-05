@@ -22,10 +22,12 @@ $USER5$=<%= nagios_extra_plugins %>
 # email password for the nagios account
 $USER6$=<%= email_password %>
 
+<% if clickatell_api_id != '' -%>
 ## clickatell vars
 $USER7$=<%= clickatell_api_id %>
 $USER8$=<%= clickatell_username %>
 $USER9$=<%= clickatell_password %>
+<% end -%>
 
 # check_mysqld options
 # warning for check_mysqld
