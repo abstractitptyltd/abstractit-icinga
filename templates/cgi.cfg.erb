@@ -13,6 +13,10 @@
 main_config_file=/etc/icinga/icinga.cfg
 
 
+icinga_check_command=<%= scope.lookupvar('icinga::params::nagios_plugins') %>/check_nagios /var/spool/icinga/status.dat
+
+
+
 # ATTRIBUTE BASED AUTHORIZATION FILE
 # This option will include a file defining authroization based on
 # attributes.
