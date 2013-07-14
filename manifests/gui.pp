@@ -31,70 +31,71 @@ class icinga::gui {
     $apache_allow_stanza = "    Order allow,deny\n    Allow from all\n"
   }
   $auth_conf = template($icinga::params::auth_template)
-  $classic_conf = template("icinga/gui_classic_conf.erb")
-  $web_conf = template("icinga/gui_web_conf.erb")
-  $pnp4nagios_conf = template("icinga/pnp4nagios_apache.erb")
+  $classic_conf = template('icinga/gui_classic_conf.erb')
+  $web_conf = template('icinga/gui_web_conf.erb')
+  $pnp4nagios_conf = template('icinga/pnp4nagios_apache.erb')
 
   if $icinga::params::gui_type =~ /^(classic|both)$/ {
-    file { "icingacgicfg":
-      name    => "/etc/icinga/cgi.cfg",
+    file { 'icingacgicfg':
+      name    => '/etc/icinga/cgi.cfg',
       owner   => $icinga_user,
       group   => $icinga_group,
-      mode    => 644,
-      content => template("icinga/cgi.cfg.erb"),
+      mode    => '0644',
+      content => template('icinga/cgi.cfg.erb'),
     }
-    file { "/var/log/icinga/gui":
+    file { '/var/log/icinga/gui':
       ensure => directory,
       owner  => $icinga_user,
       group  => $icinga_cmd_grp,
-      mode   => 2775,
+      mode   => '2775',
     }
   }
 
   ## need to setup an exec to clean the web cache if these files change
   ## needs to run /usr/bin/icinga-web-clearcache
   if $icinga::params::gui_type =~ /^(web|both)$/ {
-    file { "/etc/icinga-web/conf.d/databases.xml":
+    file { '/etc/icinga-web/conf.d/databases.xml':
       owner   => root,
       group   => root,
-      mode    => 644,
+      mode    => '0644',
       content => template('icinga/databases.xml.erb'),
     }
-    file { "/etc/icinga-web/conf.d/auth.xml":
+    file { '/etc/icinga-web/conf.d/auth.xml':
       owner   => root,
       group   => root,
-      mode    => 644,
+      mode    => '0644',
       content => template('icinga/auth.xml.erb'),
     }
-    /*
-    # this still needs work
-    file { "/etc/icinga-web/conf.d/access.xml":
-      owner   => root,
-      group   => root,
-      mode    => 644,
-      content => template('icinga/access.xml.erb'),
-    }
-    */
-    file { "/var/cache/icinga-web":
+    #
+    #     # this still needs work
+    #     file { "/etc/icinga-web/conf.d/access.xml":
+    #       owner   => root,
+    #       group   => root,
+    #       mode    => 644,
+    #       content => template('icinga/access.xml.erb'),
+    #     }
+    #
+
+    file { '/var/cache/icinga-web':
       ensure => directory,
       owner  => $apache::params::user,
       group  => $apache::params::group,
-      mode   => 775,
+      mode   => '0775',
     }
-    file { "/var/log/icinga/web":
+    file { '/var/log/icinga/web':
       ensure => directory,
       owner  => $icinga_user,
       group  => $icinga_cmd_grp,
-      mode   => 2775,
+      mode   => '2775',
     }
   }
 
   apache::vhost { $icinga::params::webhostname:
     port               => $icinga::params::web_port,
-    docroot            => $icinga::params::gui_type ? { default => '/usr/share/icinga/', 'web' => '/usr/share/icinga-web/pub' },
+    docroot            => $icinga::params::gui_type ? { default => '/usr/share/icinga/', 'web'   => '/usr/share/icinga-web/pub' },
     docroot_owner      => root,
     docroot_group      => root,
-    template           => "icinga/apache.conf.erb",
+    template           => 'icinga/apache.conf.erb',
     configure_firewall => $icinga::params::configure_firewall,
   }
 
@@ -106,7 +107,7 @@ class icinga::gui {
           name   => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",
           owner  => root,
           group  => root,
-          mode   => 644,
+          mode   => '0644',
           source => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
           notify => Service[httpd],
         }
@@ -116,7 +117,7 @@ class icinga::gui {
           name   => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
           owner  => root,
           group  => root,
-          mode   => 644,
+          mode   => '0644',
           source => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.crt",
           notify => Service[httpd],
         }

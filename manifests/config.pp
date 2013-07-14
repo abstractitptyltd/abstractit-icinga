@@ -28,65 +28,65 @@ class icinga::config {
   $flap_detection = $icinga::params::flap_detection
 
   file { 'icingacfg':
-    name => '/etc/icinga/icinga.cfg',
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 644,
-    notify => Class[icinga::service],
+    name    => '/etc/icinga/icinga.cfg',
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0644',
+    notify  => Class[icinga::service],
     content => template('icinga/icinga.cfg.erb'),
   }
 
   file { 'idomodcfg':
-    name => '/etc/icinga/idomod.cfg',
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 644,
-    notify => Class[icinga::service],
+    name    => '/etc/icinga/idomod.cfg',
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0644',
+    notify  => Class[icinga::service],
     content => template('icinga/idomod.cfg.erb'),
   }
 
   file { 'icinga_resource':
-    name => '/etc/icinga/resource.cfg',
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 644,
-    notify => Class[icinga::service],
+    name    => '/etc/icinga/resource.cfg',
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0644',
+    notify  => Class[icinga::service],
     content => template('icinga/resource.cfg.erb'),
   }
 
   file { '/var/log/icinga':
     ensure => directory,
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 775,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0775',
   }
 
   file { '/var/log/icinga/archives':
     ensure => directory,
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 775,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0775',
   }
 
   file { '/var/spool/icinga':
     ensure => directory,
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 755,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0755',
   }
 
   file { '/var/spool/icinga/checkresults':
     ensure => directory,
-    owner => $icinga_user,
-    group => $icinga_group,
-    mode => 775,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0775',
   }
 
   file { '/var/spool/icinga/cmd':
     ensure => directory,
-    owner => $icinga_user,
-    group => $icinga_cmd_grp,
-    mode => 2755,
+    owner  => $icinga_user,
+    group  => $icinga_cmd_grp,
+    mode   => '2755',
   }
 
 }
