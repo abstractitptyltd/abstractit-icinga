@@ -1,4 +1,4 @@
-
+#
 class icinga::params (
   $web_ip = $ipaddress,
   $web_port = 443,
@@ -45,7 +45,7 @@ class icinga::params (
   $web_auth_type = 'internal',
   $web_auth_name = 'user_defined_1',
   $ldap_security = 'tls',
-  $ldap_server = "ldap.${domain}",
+  $ldap_server = "ldap.${::domain}",
   $ldap_firstname = 'givenName',
   $ldap_lastname = 'sn',
   $ldap_email = 'mail',
@@ -114,7 +114,7 @@ class icinga::params (
         $icinga_html_path_real = $icinga_html_path
       }
 
-      if $icinacss == '' {
+      if $icingacss == '' {
         $icinga_css_path_real = '/etc/icinga/stylesheets'
       }
       else {

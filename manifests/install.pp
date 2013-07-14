@@ -1,4 +1,4 @@
-
+#
 class icinga::install {
 
   include icinga::params

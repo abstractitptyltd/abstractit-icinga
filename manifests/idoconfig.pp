@@ -1,4 +1,4 @@
-
+#
 class icinga::idoconfig {
 
   include icinga::params

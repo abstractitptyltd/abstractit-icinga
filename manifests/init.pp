@@ -1,4 +1,4 @@
-
+#
 class icinga {
   class{'icinga::params':} ->
   class{'icinga::install':} ->

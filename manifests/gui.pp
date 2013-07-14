@@ -1,4 +1,4 @@
-
+#
 class icinga::gui {
 
   include apache
@@ -25,7 +25,7 @@ class icinga::gui {
     $ido_db_port = $icinga::params::ido_db_port
   }
 
-  if $operatingsystem == 'Fedora' and $operatingsystemrelease >= 18 {
+  if $::operatingsystem == 'Fedora' and $::operatingsystemrelease >= 18 {
     $apache_allow_stanza = "    Require all granted\n"
   } else {
     $apache_allow_stanza = "    Order allow,deny\n    Allow from all\n"
@@ -90,9 +90,14 @@ class icinga::gui {
     }
   }
 
+  $docroot_for_gui = $icinga::params::gui_type ? {
+    default => '/usr/share/icinga/',
+    'web' => '/usr/share/icinga-web/pub',
+  }
+
   apache::vhost { $icinga::params::webhostname:
     port               => $icinga::params::web_port,
-    docroot            => $icinga::params::gui_type ? { default => '/usr/share/icinga/', 'web'   => '/usr/share/icinga-web/pub' },
+    docroot            => $docroot_for_gui,
     docroot_owner      => root,
     docroot_group      => root,
     template           => 'icinga/apache.conf.erb',
