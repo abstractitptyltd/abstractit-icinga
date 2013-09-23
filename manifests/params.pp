@@ -96,6 +96,8 @@ class icinga::params (
       else {
         $pnp4nagios_html_path_real = $pnp4nagios_html_path
       }
+
+      $cgi_url = '/icinga/cgi-bin'
     }
     'Debian': {
       if $icinga_cgi_path == '' {
@@ -125,6 +127,8 @@ class icinga::params (
       else {
         $pnp4nagios_html_path_real = $pnp4nagios_html_path
       }
+
+      $cgi_url = '/cgi-bin/icinga'
     }
     default: {
       fail("Only Debian/Red Hat based systems supported, not ${::osfamily}")
