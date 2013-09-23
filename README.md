@@ -170,7 +170,11 @@ If you would like support for another OS and are willing to help test it let us 
 Release Notes
 -------------
 
-**1.1.0**
+**1.2.1**
+Merging in more fixes from Josh Holland
+switching to `ensure_packages` for package installs
+
+**1.2.0**
 
 Support for Debian/Ubuntu provided by  Josh Holland (@jshholland on Github)
 

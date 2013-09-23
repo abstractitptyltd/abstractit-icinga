@@ -1,6 +1,6 @@
 name 'rendhalver-icinga'
 author 'rendhalver'
-version '1.2.0'
+version '1.2.1'
 summary 'manage an icinga server'
 description "manage icinga server with puppet"
 project_page 'https://github.com/rendhalver/puppet-icinga'
