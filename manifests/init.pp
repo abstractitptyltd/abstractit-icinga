@@ -2,6 +2,7 @@
 class icinga {
   class{'icinga::params':} ->
   class{'icinga::install':} ->
+  class{'icinga::users':} ->
   class{'icinga::idoconfig':} ~>
   class{'icinga::idoservice':} ->
   class{'icinga::config':} ~>
@@ -13,7 +14,7 @@ class icinga {
   } else {
     notice("no gui selected")
   }
-  if ( $icinga::params::perfdata == true and $icinga::params::perfdatatype == 'pnp4nagios' ) {
+  if ( $icinga::params::perfdata == true and $icinga::params::perfdatatype =~ /^pnp4nagios$/ ) {
     include pnp4nagios
   }
 }

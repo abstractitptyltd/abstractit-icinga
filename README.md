@@ -1,4 +1,4 @@
-icinga
+abstractit-icinga
 ====
 
 ####Table of Contents
@@ -14,23 +14,20 @@ icinga
 8. [Development - Guide for contributing to the module](#development)
 9. [Release Notes - Notes on the most recent updates to the module](#release-notes)
 
-Breaking Changes
-----------------
+New stuff and bug fixes
+-----------------------
+
+I recently started a consulting company called Abstract IT Pty Ltd. I have transfered ownership of all my puppet modules to a new organisation on Puppet Forge called abstractit.
+I am making one final release of my modules under rendhalver and abstractit to give you a chance to switch over to the new organisation.
+I have also added a licence. All my modules will be licenced under Apache v2.
 
 More fixing changes. We now have officially tested support for Debian and Ubuntu thanks to Josh Holland (@jshholland)
-
-
-Old News
---------
 
 I added support for using ldap auth for the classic web gui and needed to make some changes to the ldap variables.
 I have added a new var `$ldap_security` to the params class. This is used to set which security method to use when talking to ldap. Accepted values are tls ssl or none
 I have also added vars for setting the base group dn for authentication `$ldap_groupdn`.
 The `$ldap_auth_group` is used to tell ldap which group to restrict access to.
 You can still use the `$ldap_filter` variable but apache auth may not work and it will be an extra filter to add to auth checking.
-
-New stuff and bug fixes
------------------------
 
 I have added support for graphing performance data with pnp4nagios (also published as a module for that as well)
 If you don't want this cool feature set `$icinga::params::perfdata` to false and it won't get setup for you.
@@ -169,6 +166,10 @@ If you would like support for another OS and are willing to help test it let us 
 
 Release Notes
 -------------
+
+**1.2.1**
+Final release for rendhalver-icinga.
+First release as abstractit-icinga.
 
 **1.2.1**
 Merging in more fixes from Josh Holland
