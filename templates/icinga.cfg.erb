@@ -1264,7 +1264,7 @@ date_format=iso8601
 # embedded Perl interpreter) is located.  If you didn't compile
 # Icinga with embedded Perl support, this option has no effect.
 
-p1_file=/usr/lib<% if hardwareisa == 'x86_64' %>64<% end %>/icinga/p1.pl
+p1_file=/usr/lib<% if @hardwareisa == 'x86_64' %>64<% end %>/icinga/p1.pl
 
 
 
