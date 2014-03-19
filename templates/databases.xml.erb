@@ -16,7 +16,7 @@
     Overwrite the icinga-web database (where users, roles, views, etc are stored 
     -->
     <db:database name="icinga_web" class="AppKitDoctrineDatabase">
-	<ae:parameter name="dsn"><%= scope.lookupvar('icinga::params::web_db_server') %>://<%= scope.lookupvar('icinga::params::web_db_user') %>:<%= scope.lookupvar('icinga::params::web_db_pass') %>@<%= scope.lookupvar('icinga::params::web_db_host') %>:<%= web_db_port %>/<%= scope.lookupvar('icinga::params::web_db_name') %></ae:parameter>
+	<ae:parameter name="dsn"><%= scope.lookupvar('icinga::params::web_db_server') %>://<%= scope.lookupvar('icinga::params::web_db_user') %>:<%= scope.lookupvar('icinga::params::web_db_pass') %>@<%= scope.lookupvar('icinga::params::web_db_host') %>:<%= @web_db_port %>/<%= scope.lookupvar('icinga::params::web_db_name') %></ae:parameter>
         <ae:parameter name="charset">utf8</ae:parameter>
         <ae:parameter name="manager_attributes">
             <ae:parameter name="Doctrine_Core::ATTR_MODEL_LOADING">CONSERVATIVE</ae:parameter>
@@ -43,7 +43,7 @@
         EXAMPLE (oracle needs icingaOracle as the db driver) 
     -->
     <db:database xmlns="http://agavi.org/agavi/config/parts/databases/1.0" name="icinga" class="IcingaDoctrineDatabase">
-	<ae:parameter name="dsn"><%= scope.lookupvar('icinga::params::ido_db_server') %>://<%= scope.lookupvar('icinga::params::ido_db_user') %>:<%= scope.lookupvar('icinga::params::ido_db_pass') %>@<%= scope.lookupvar('icinga::params::ido_db_host') %>:<%= ido_db_port %>/<%= scope.lookupvar('icinga::params::ido_db_name') %></ae:parameter>
+	<ae:parameter name="dsn"><%= scope.lookupvar('icinga::params::ido_db_server') %>://<%= scope.lookupvar('icinga::params::ido_db_user') %>:<%= scope.lookupvar('icinga::params::ido_db_pass') %>@<%= scope.lookupvar('icinga::params::ido_db_host') %>:<%= @ido_db_port %>/<%= scope.lookupvar('icinga::params::ido_db_name') %></ae:parameter>
         <ae:parameter name="prefix">icinga_</ae:parameter>
         <ae:parameter name="charset">utf8</ae:parameter>
         <ae:parameter name="use_retained">true</ae:parameter>
