@@ -14,7 +14,7 @@ class icinga::install {
          #package { 'icinga-gui': ensure => installed }
        }
        if ( $icinga::params::gui_type =~ /^(web|both)$/ ) {
-         ensure_packages(["icinga-web","php-soap","php-gd","php-ldap"])
+         ensure_packages(["icinga-web","${icinga::params::php_package_prefix}-soap","${icinga::params::php_package_prefix}-gd","php-ldap"])
          #package { 'icinga-web': ensure => installed }
          #package { ['php-soap','php-gd','php-ldap']: ensure => installed }
        }
