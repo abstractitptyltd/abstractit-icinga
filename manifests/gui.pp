@@ -94,12 +94,11 @@ class icinga::gui {
     docroot            => $icinga::params::gui_type ? { default => '/usr/share/icinga/', 'web' => '/usr/share/icinga-web/pub' },
     docroot_owner      => root,
     docroot_group      => root,
-    template           => "icinga/apache.conf.erb",
-    configure_firewall => $icinga::params::configure_firewall,
+    custom_fragment           => template("icinga/apache.conf.erb"),
   }
 
   if ( $icinga::params::ssl == true ) {
-    include apache::ssl
+    include apache::mod::ssl
     if ( $icinga::params::manage_ssl == true ) {
       if ! defined(File["ssl_key_${icinga::params::webhostname}"]) {
         file { "ssl_key_${icinga::params::webhostname}":

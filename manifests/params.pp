@@ -12,7 +12,6 @@ class icinga::params (
   $ssl_cypher_list = 'ALL:!ADH:RC4+RSA:+HIGH:!MEDIUM:!LOW:!SSLv2:+SSLv3:+TLSv1:!EXP:!eNULL',
   $manage_ssl = true,
   $webhostname = $fqdn,
-  $configure_firewall = true,
   $gui_type = "classic",
   $auth_template = "icinga/icinga_auth_conf.erb",
   $notifications = 1,

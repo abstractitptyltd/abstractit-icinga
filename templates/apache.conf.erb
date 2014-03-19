@@ -30,8 +30,8 @@ SSLCACertificateFile <%= scope.lookupvar('icinga::params::ssl_cacrt') %>
 SSLOptions +FakeBasicAuth +ExportCertData +StdEnvVars +StrictRequire
 <% end -%>
 ServerName <%= scope.lookupvar('icinga::params::webhostname') %>
-CustomLog <%= logroot %>/icinga-web-access_log combined
-ErrorLog <%= logroot %>/icinga-web-error_log
+CustomLog <%= scope.lookupvar('apache::logroot') %>/icinga-web-access_log combined
+ErrorLog <%= scope.lookupvar('apache::logroot') %>/icinga-web-error_log
 
 <% if scope.lookupvar('icinga::params::gui_type') =~ /^(classic|both)$/ -%>
 #### config for classic interface

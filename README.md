@@ -109,7 +109,7 @@ extra settings
     $email_password = hiera('monitoring::email_password')
     $ssl_cert_source = hiera('ssl_cert_source')
 
-Using the new weg interface
+Using the web interface
 
 set these options for the database the web interface will use
     $web_db_server = 'mysql',
