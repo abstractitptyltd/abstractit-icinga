@@ -1,6 +1,8 @@
 abstractit-icinga
 ====
 
+[![Build Status](https://travis-ci.org/abstractitptyltd/puppet-icinga.svg?branch=master)](https://travis-ci.org/abstractitptyltd/puppet-icinga)
+
 ####Table of Contents
 
 0. [Breaking Changes](#changes)
