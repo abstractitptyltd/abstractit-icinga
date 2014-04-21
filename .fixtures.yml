@@ -1,0 +1,10 @@
+fixtures:
+  repositories:
+    apache:
+      repo: "git://github.com/puppetlabs/puppetlabs-apache"
+      ref: "0.10.0"
+    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib"
+    pnp4nagios: "git://github.com/rendhalver/puppet-pnp4nagios"
+    apt: "git://github.com/puppetlabs/puppetlabs-apt"
+  symlinks:
+    icinga: "#{source_dir}"
