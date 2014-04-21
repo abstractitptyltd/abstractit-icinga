@@ -1,3 +1,7 @@
+# Class icinga::idoservice
+#
+# manages the the ido service for icinga
+
 class icinga::idoservice {
 
   case $lsbdistdescription {

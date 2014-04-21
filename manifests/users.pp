@@ -2,6 +2,7 @@
 #
 # Setup users for Icinga
 #
+
 class icinga::users {
   include icinga::params
   $icinga_user = $icinga::params::icinga_user

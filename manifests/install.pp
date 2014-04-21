@@ -1,3 +1,6 @@
+# Class icinga::install
+#
+# install necessicary packages for icinga
 
 class icinga::install {
 

@@ -1,3 +1,6 @@
+# Class icinga::config
+#
+# Configures icinga using the defaults set in the params class
 
 class icinga::config {
 

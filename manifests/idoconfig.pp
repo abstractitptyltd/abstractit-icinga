@@ -1,3 +1,6 @@
+# Class icinga::idoconfig
+#
+# setuop ido for icinga
 
 class icinga::idoconfig {
 

@@ -1,8 +1,11 @@
+# Class icinga::gui
+#
+# Configures the icinga gui
 
 class icinga::gui {
 
-  include apache
-  include apache::mod::php
+  include ::apache
+  include ::apache::mod::php
   include icinga::params
   $icinga_user = $icinga::params::icinga_user
   $icinga_group = $icinga::params::icinga_group
@@ -11,6 +14,8 @@ class icinga::gui {
   $admin_group = $icinga::params::admin_group
   $ro_users = $icinga::params::ro_users
   $ro_group = $icinga::params::ro_group
+  $ssl = $icinga::params::ssl
+  }
   # check if we are running pgsql and fix port if it is set to default mysql port
   if $icinga::params::web_db_server == 'pgsql' and $icinga::params::web_db_port == 3306 {
     $web_db_port = 5432
@@ -42,7 +47,7 @@ class icinga::gui {
       owner   => $icinga_user,
       group   => $icinga_group,
       mode    => '0644',
-      content => template("icinga/cgi.cfg.erb"),
+      content => template('icinga/cgi.cfg.erb'),
     }
     file { '/var/log/icinga/gui':
       ensure => directory,
@@ -61,7 +66,7 @@ class icinga::gui {
       mode    => '0644',
       content => template('icinga/databases.xml.erb'),
     }
-    file { "/etc/icinga-web/conf.d/auth.xml":
+    file { '/etc/icinga-web/conf.d/auth.xml':
       owner   => root,
       group   => root,
       mode    => 644,
@@ -78,8 +83,8 @@ class icinga::gui {
 
     file { '/var/cache/icinga-web':
       ensure => directory,
-      owner  => $apache::params::user,
-      group  => $apache::params::group,
+      owner  => $::apache::params::user,
+      group  => $::apache::params::group,
       mode   => '0775',
     }
     file { '/var/log/icinga/web':
@@ -118,7 +123,7 @@ class icinga::gui {
     error_log_file      => 'icinga-web-error_log',
   }
 
-  if ( $icinga::params::ssl == true ) {
+  if ( $ssl == true ) {
     if ( $icinga::params::manage_ssl == true and $icinga::params::ssl_cert_source != '' ) {
       include apache::ssl
       if ! defined(File["ssl_key_${icinga::params::webhostname}"]) {

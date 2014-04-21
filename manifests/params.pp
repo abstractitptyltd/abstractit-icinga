@@ -1,3 +1,6 @@
+# Class icinga::params
+#
+# base params for icinga
 
 class icinga::params (
   $web_ip = $ipaddress,

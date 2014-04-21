@@ -1,3 +1,6 @@
+# Class icinga::service
+#
+# manages the the icinga service
 
 class icinga::service {
 
