@@ -13,8 +13,8 @@ class icinga::params (
   $manage_ssl = true,
   $webhostname = $fqdn,
   $configure_firewall = true,
-  $gui_type = "classic",
-  $auth_template = "icinga/icinga_auth_conf.erb",
+  $gui_type = 'classic',
+  $auth_template = 'icinga/icinga_auth_conf.erb',
   $notifications = 1,
   $embedded_perl = 0,
   $perfdata = false,
@@ -43,7 +43,7 @@ class icinga::params (
   $web_db_user = 'icinga_web',
   $web_db_pass = 'icinga_web',
   $web_auth_type = 'internal',
-  $web_auth_name = "user_defined_1",
+  $web_auth_name = 'user_defined_1',
   $ldap_security = 'tls',
   $ldap_server = "ldap.${domain}",
   $ldap_firstname = 'givenName',
@@ -53,8 +53,8 @@ class icinga::params (
   $ldap_groupdn = undef,
   $ldap_binddn = undef,
   $ldap_bindpw = undef,
-  $ldap_userattr = uid,
-  $ldap_groupattr = memberOf,
+  $ldap_userattr = 'uid',
+  $ldap_groupattr = 'memberOf',
   $ldap_filter_extra = undef,
   $ldap_auth_group = undef,
 ) {
@@ -114,11 +114,11 @@ class icinga::params (
         $icinga_html_path_real = $icinga_html_path
       }
 
-      if $icinacss == '' {
+      if $icinga_css_path == '' {
         $icinga_css_path_real = '/etc/icinga/stylesheets'
       }
       else {
-        $icinga_css_path_real = $icinga_css_path_real
+        $icinga_css_path_real = $icinga_css_path
       }
 
       if $pnp4nagios_html_path == '' {

@@ -18,10 +18,10 @@ class icinga::idoconfig {
   # /usr/share/doc/icinga-idoutils-libdbi-mysql-$ICINGA_VERSION/db/${icinga::params::ido_db_server}
 
   file { '/etc/icinga/ido2db.cfg':
-    owner => root,
-    group => root,
-    mode => 660,
-    notify => Class[icinga::idoservice],
+    owner   => root,
+    group   => root,
+    mode    => '0660',
+    notify  => Class[icinga::idoservice],
     content => template('icinga/ido2db.cfg.erb'),
   }
 

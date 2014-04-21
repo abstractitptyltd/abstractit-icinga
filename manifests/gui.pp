@@ -25,7 +25,7 @@ class icinga::gui {
     $ido_db_port = $icinga::params::ido_db_port
   }
 
-  if $operatingsystem == 'Fedora' and $operatingsystemrelease >= 18 {
+  if $::operatingsystem == 'Fedora' and $::operatingsystemrelease >= 18 {
     $apache_allow_stanza = "    Require all granted\n"
   } else {
     $apache_allow_stanza = "    Order allow,deny\n    Allow from all\n"
@@ -38,28 +38,27 @@ class icinga::gui {
 
 
   if $icinga::params::gui_type =~ /^(classic|both)$/ {
-    file { "icingacgicfg":
-      name    => "/etc/icinga/cgi.cfg",
+    file { '/etc/icinga/cgi.cfg':
       owner   => $icinga_user,
       group   => $icinga_group,
-      mode    => 644,
+      mode    => '0644',
       content => template("icinga/cgi.cfg.erb"),
     }
-    file { "/var/log/icinga/gui":
+    file { '/var/log/icinga/gui':
       ensure => directory,
       owner  => $icinga_user,
       group  => $icinga_cmd_grp,
-      mode   => 2775,
+      mode   => '2775',
     }
   }
 
   ## need to setup an exec to clean the web cache if these files change
   ## needs to run /usr/bin/icinga-web-clearcache
   if $icinga::params::gui_type =~ /^(web|both)$/ {
-    file { "/etc/icinga-web/conf.d/databases.xml":
+    file { '/etc/icinga-web/conf.d/databases.xml':
       owner   => root,
       group   => root,
-      mode    => 644,
+      mode    => '0644',
       content => template('icinga/databases.xml.erb'),
     }
     file { "/etc/icinga-web/conf.d/auth.xml":
@@ -68,26 +67,26 @@ class icinga::gui {
       mode    => 644,
       content => template('icinga/auth.xml.erb'),
     }
-    /*
+
     # this still needs work
-    file { "/etc/icinga-web/conf.d/access.xml":
-      owner   => root,
-      group   => root,
-      mode    => 644,
-      content => template('icinga/access.xml.erb'),
-    }
-    */
-    file { "/var/cache/icinga-web":
+    #file { "/etc/icinga-web/conf.d/access.xml":
+    #  owner   => root,
+    #  group   => root,
+    #  mode    => 644,
+    #  content => template('icinga/access.xml.erb'),
+    #}
+
+    file { '/var/cache/icinga-web':
       ensure => directory,
       owner  => $apache::params::user,
       group  => $apache::params::group,
-      mode   => 775,
+      mode   => '0775',
     }
-    file { "/var/log/icinga/web":
+    file { '/var/log/icinga/web':
       ensure => directory,
       owner  => $icinga_user,
       group  => $icinga_cmd_grp,
-      mode   => 2775,
+      mode   => '2775',
     }
   }
 
