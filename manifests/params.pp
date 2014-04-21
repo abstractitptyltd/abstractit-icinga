@@ -3,7 +3,7 @@
 # base params for icinga
 
 class icinga::params (
-  $web_ip = $ipaddress,
+  $web_ip = $::ipaddress,
   $web_port = 443,
   $icinga_user = 'icinga',
   $icinga_group = 'icinga',
@@ -13,8 +13,8 @@ class icinga::params (
   $ssl = true,
   $ssl_cacrt = undef,
   $ssl_cypher_list = 'ALL:!ADH:RC4+RSA:+HIGH:!MEDIUM:!LOW:!SSLv2:+SSLv3:+TLSv1:!EXP:!eNULL',
-  $manage_ssl = true,
-  $webhostname = $fqdn,
+  $manage_ssl = false,
+  $webhostname = $::fqdn,
   $configure_firewall = true,
   $gui_type = 'classic',
   $auth_template = 'icinga/icinga_auth_conf.erb',
@@ -48,7 +48,7 @@ class icinga::params (
   $web_auth_type = 'internal',
   $web_auth_name = 'user_defined_1',
   $ldap_security = 'tls',
-  $ldap_server = "ldap.${domain}",
+  $ldap_server = "ldap.${::domain}",
   $ldap_firstname = 'givenName',
   $ldap_lastname = 'sn',
   $ldap_email = 'mail',
