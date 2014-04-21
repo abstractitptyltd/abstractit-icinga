@@ -12,6 +12,7 @@
     "manifests/service.pp": "ad50e236105d888c6bfff914e06da6dc",
     "CHANGELOG.md": "a0c170e7e3365e87693ed95b6222e86d",
     "templates/pnp4nagios_apache.erb": "693616b6449141eeb08c794b50c39b3a",
+    "metadata.json.new": "0d98590d6982072efcacc46031cd58eb",
     "templates/ido2db.cfg.erb": "e9824b189ea0ce86e30974e21920efff",
     ".travis.yml": "2f94522220e25d15204cc5ff429f940a",
     "spec/spec_helper.rb": "31443cbb31de764aac79186cbc17689f",
@@ -19,6 +20,7 @@
     "manifests/gui.pp": "d1f5426d74d57221ddcb5f2eb7e28e54",
     "templates/gui_classic_conf.erb": "ff199f1671dffe75b35564b4a90ef456",
     "manifests/init.pp": "b6e947a6d4fa6a92ea739e9a9323014c",
+    ".metadata.json.swp": "39b740cbc1b59a69df43a5acdd10f1fc",
     "templates/gui_web_conf.erb": "64227b9f412c2af4103746c7b15301d7",
     "broken/templates/apache.conf.erb.check": "e28572427a3ac51c48eaeb4a02a70b6c",
     "manifests/config.pp": "ba806fbe47dd31936505c3a21b3bf1c9",
@@ -33,7 +35,7 @@
     "templates/apache.conf.erb": "189806e88f4830d99afaf5caa8273a5e",
     "broken/templates/icinga_auth_conf_2.4.erb": "d83dc7274d741a2fedc1d514933edf34",
     "templates/auth.xml.erb": "507d47981f38c6c91643a930c4bfea8d",
-    "Modulefile": "a8f33bfd11da3429116139c363603fbb",
+    "Modulefile": "5ab5e5ea79c07de2d12ee53aca09c62f",
     ".fixtures.yml": "35062200929ea93c8906f2aa77fd9acf",
     "spec/classes/icinga_spec.rb": "7b87e7e18164c4a00806bea03c81748b",
     "templates/access.xml.erb": "e9b9b249867030367c70cde6bd5f2f26",
@@ -42,29 +44,29 @@
   "dependencies": [
     {
       "name": "abstractit/pnp4nagios",
-      "version_requirement": ">=0.1.1"
+      "version_requirement": "\u003e\u003d0.1.1"
     },
     {
       "name": "puppetlabs/apache",
-      "version_requirement": ">=0.10.0"
+      "version_requirement": "\u003e\u003d0.10.0"
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">=0.0.1"
+      "version_requirement": "\u003e\u003d0.0.1"
     },
     {
       "name": "puppetlabs/apt",
-      "version_requirement": ">=0.0.1"
+      "version_requirement": "\u003e\u003d0.0.1"
     }
   ],
   "description": "manage icinga server with puppet",
   "license": "Apache v2 Licence",
   "name": "abstractit-icinga",
   "project_page": "https://github.com/abstractitptyltd/puppet-icinga",
-  "source": "",
+  "source": "https://github.com/abstractitptyltd/puppet-icinga",
   "summary": "manage an icinga server",
   "types": [],
-  "version": "1.2.2"
+  "version": "1.2.2",
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
