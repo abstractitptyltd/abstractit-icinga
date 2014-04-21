@@ -4,7 +4,7 @@
 
 class icinga::idoservice {
 
-  case $lsbdistdescription {
+  case $::lsbdistdescription {
     ## some tricky logic to use systemd on fedora 17+
     /Fedora release (.+)/: {
       if versioncmp($1,'17') >= 0 {
@@ -18,9 +18,9 @@ class icinga::idoservice {
     }
   }
   service { 'ido2db':
+    ensure     => running,
     name       => $servicename,
     provider   => $provider,
-    ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,

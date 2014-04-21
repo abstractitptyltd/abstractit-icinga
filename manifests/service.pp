@@ -4,10 +4,10 @@
 
 class icinga::service {
 
-  case $lsbdistdescription {
+  case $::lsbdistdescription {
     ## some tricky logic to use systemd on fedora 17+
     /Fedora release (.+)/: {
-      if versioncmp($1,"17") >= 0 {
+      if versioncmp($1,'17') >= 0 {
         $servicename = 'icinga.service'
         $provider = 'systemd'
       }
@@ -18,14 +18,17 @@ class icinga::service {
     }
   }
   service { 'icinga':
-    name => $servicename,
-    provider => $provider,
-    ensure => running,
-    enable => true,
-    hasstatus => true,
+    ensure     => running,
+    name       => $servicename,
+    provider   => $provider,
+    enable     => true,
+    hasstatus  => true,
     hasrestart => true,
-    restart => $provider ? { default => '/etc/init.d/icinga reload', 'systemd' => "systemctl reload ${servicename}"},
-    require => Class[icinga::idoservice],
+    restart    => $provider ? {
+      default   => '/etc/init.d/icinga reload',
+      'systemd' => "systemctl reload ${servicename}"
+    },
+    require    => Class[icinga::idoservice],
   }
 
 }

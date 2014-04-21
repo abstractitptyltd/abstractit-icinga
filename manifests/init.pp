@@ -1,3 +1,7 @@
+# Class icinga
+#
+# setup icinga
+# full docs in README.md
 
 class icinga {
   class{'icinga::params':} ->

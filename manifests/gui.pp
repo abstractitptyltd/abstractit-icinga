@@ -69,7 +69,7 @@ class icinga::gui {
     file { '/etc/icinga-web/conf.d/auth.xml':
       owner   => root,
       group   => root,
-      mode    => 644,
+      mode    => '0644',
       content => template('icinga/auth.xml.erb'),
     }
 
@@ -131,7 +131,7 @@ class icinga::gui {
           name   => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",
           owner  => root,
           group  => root,
-          mode   => 644,
+          mode   => '0644',
           source => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.key",
           notify => Service[httpd],
         }
@@ -141,7 +141,7 @@ class icinga::gui {
           name   => "${apache::params::ssl_path}/${icinga::params::webhostname}.crt",
           owner  => root,
           group  => root,
-          mode   => 644,
+          mode   => '0644',
           source => "${icinga::params::ssl_cert_source}/${icinga::params::webhostname}.crt",
           notify => Service[httpd],
         }
