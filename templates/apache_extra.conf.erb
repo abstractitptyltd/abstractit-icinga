@@ -1,0 +1,28 @@
+
+<% if scope.lookupvar('icinga::params::web_auth_type') == 'ldap' \
+   && scope.lookupvar('icinga::params::ldap_security') =~ /(tls|ssl)/ -%>
+## ldap config   
+LDAPVerifyServerCert Off
+LDAPTrustedMode <% if scope.lookupvar('icinga::params::ldap_security') == 'tls' %>TLS<% else %>SSL<% end %>
+LDAPSharedCacheSize 500000
+LDAPCacheEntries 1024
+LDAPCacheTTL 600
+LDAPOpCacheEntries 1024
+LDAPOpCacheTTL 600
+<% end -%>
+
+<% if scope.lookupvar('icinga::params::gui_type') =~ /^(classic|both)$/ -%>
+#### config for classic interface
+<%= scope.lookupvar('icinga::gui::classic_conf') %>
+<% end -%>
+<% if scope.lookupvar('icinga::params::gui_type') =~ /^(web|both)$/ %>
+#### config for new web interface
+<%= scope.lookupvar('icinga::gui::web_conf') %>
+<% end -%>
+
+<% if scope.lookupvar('icinga::params::perfdata') == true -%>
+## pnp4nagios gui
+<% if scope.lookupvar('icinga::params::perfdatatype') == 'pnp4nagios' %>
+<%= scope.lookupvar('icinga::gui::pnp4nagios_conf') %>
+<% end -%>
+<% end -%>

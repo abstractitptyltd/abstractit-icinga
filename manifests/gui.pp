@@ -15,7 +15,7 @@ class icinga::gui {
   $ro_users = $icinga::params::ro_users
   $ro_group = $icinga::params::ro_group
   $ssl = $icinga::params::ssl
-  }
+
   # check if we are running pgsql and fix port if it is set to default mysql port
   if $icinga::params::web_db_server == 'pgsql' and $icinga::params::web_db_port == 3306 {
     $web_db_port = 5432
@@ -147,7 +147,7 @@ class icinga::gui {
         }
       }
     } else {
-      warning("ssl_cert_source not set. ssl not enabled")
+      warning('ssl_cert_source not set. ssl not enabled')
     }
   }
 

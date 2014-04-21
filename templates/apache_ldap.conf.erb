@@ -1,0 +1,12 @@
+
+<% if scope.lookupvar('icinga::params::web_auth_type') == 'ldap' \
+   && scope.lookupvar('icinga::params::ldap_security') =~ /(tls|ssl)/ -%>
+LDAPVerifyServerCert Off
+LDAPTrustedMode <% if scope.lookupvar('icinga::params::ldap_security') == 'tls' %>TLS<% else %>SSL<% end %>
+LDAPSharedCacheSize 500000
+LDAPCacheEntries 1024
+LDAPCacheTTL 600
+LDAPOpCacheEntries 1024
+LDAPOpCacheTTL 600
+<% end -%>
+
