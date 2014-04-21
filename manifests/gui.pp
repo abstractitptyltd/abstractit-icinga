@@ -125,7 +125,7 @@ class icinga::gui {
 
   if ( $ssl == true ) {
     if ( $icinga::params::manage_ssl == true and $icinga::params::ssl_cert_source != '' ) {
-      include apache::ssl
+      include apache::mod::ssl
       if ! defined(File["ssl_key_${icinga::params::webhostname}"]) {
         file { "ssl_key_${icinga::params::webhostname}":
           name   => "${apache::params::ssl_path}/${icinga::params::webhostname}.key",

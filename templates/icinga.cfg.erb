@@ -115,7 +115,7 @@ status_update_interval=10
 
 
 # ICINGA USER
-# This determines the effective user that Icinga should run as.  
+# This determines the effective user that Icinga should run as.
 # You can either supply a username or a UID.
 
 icinga_user=<%= scope.lookupvar('icinga::params::icinga_user') %>
@@ -123,7 +123,7 @@ icinga_user=<%= scope.lookupvar('icinga::params::icinga_user') %>
 
 
 # ICINGA GROUP
-# This determines the effective group that Icinga should run as.  
+# This determines the effective group that Icinga should run as.
 # You can either supply a group name or a GID.
 
 icinga_group=<%= scope.lookupvar('icinga::params::icinga_group') %>
@@ -149,7 +149,7 @@ check_external_commands=1
 # Icinga to check for external commands every minute.  If you specify a
 # number followed by an "s" (i.e. 15s), this will be interpreted to mean
 # actual seconds rather than a multiple of the interval_length variable.
-# Note: In addition to reading the external command file at regularly 
+# Note: In addition to reading the external command file at regularly
 # scheduled intervals, Icinga will also check for external commands after
 # event handlers are executed.
 # NOTE: Setting this value to -1 causes Icinga to check the external
