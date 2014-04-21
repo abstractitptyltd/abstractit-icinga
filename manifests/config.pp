@@ -27,8 +27,7 @@ class icinga::config {
   $stalking = $icinga::params::stalking
   $flap_detection = $icinga::params::flap_detection
 
-  file { 'icingacfg':
-    name    => '/etc/icinga/icinga.cfg',
+  file { '/etc/icinga/icinga.cfg':
     owner   => $icinga_user,
     group   => $icinga_group,
     mode    => '0644',
@@ -36,8 +35,7 @@ class icinga::config {
     content => template('icinga/icinga.cfg.erb'),
   }
 
-  file { 'idomodcfg':
-    name    => '/etc/icinga/idomod.cfg',
+  file { '/etc/icinga/idomod.cfg':
     owner   => $icinga_user,
     group   => $icinga_group,
     mode    => '0644',
@@ -45,8 +43,7 @@ class icinga::config {
     content => template('icinga/idomod.cfg.erb'),
   }
 
-  file { 'icinga_resource':
-    name    => '/etc/icinga/resource.cfg',
+  file { '/etc/icinga/resource.cfg':
     owner   => $icinga_user,
     group   => $icinga_group,
     mode    => '0644',

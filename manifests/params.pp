@@ -17,7 +17,7 @@ class icinga::params (
   $auth_template = "icinga/icinga_auth_conf.erb",
   $notifications = 1,
   $embedded_perl = 0,
-  $perfdata = true,
+  $perfdata = false,
   $perfdatatype = 'pnp4nagios',
   $pnp4nagios_html_path = '',
   $admin_group = undef,

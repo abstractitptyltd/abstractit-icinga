@@ -1,0 +1,53 @@
+{
+  "author": "abstractit",
+  "dependencies": [
+    {
+      "name": "abstractit/pnp4nagios",
+      "version_requirement": ">=0.1.1"
+    },
+    {
+      "name": "puppetlabs/apache",
+      "version_requirement": ">=0.10.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=0.0.1"
+    },
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">=0.0.1"
+    }
+  ],
+  "description": "manage icinga server with puppet",
+  "license": "Apache v2 Licence",
+  "name": "abstractit-icinga",
+  "project_page": "https://github.com/abstractitptyltd/puppet-icinga",
+  "source": "",
+  "summary": "manage an icinga server",
+  "types": [],
+  "version": "1.2.2"
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04"
+      ]
+    },
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+}
