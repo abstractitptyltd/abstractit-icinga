@@ -1,26 +1,20 @@
 {
   "name": "abstractit-icinga",
   "version": "1.2.2",
-  "author": "abstractit",
+  "author": "Abstract IT",
   "license": "Apache v2 Licence",
   "summary": "manage an icinga server",
   "source": "https://github.com/abstractitptyltd/abstractit-icinga",
   "project_page": "(https://github.com/abstractitptyltd/abstractit-icinga)",
-  "source": "https://github.com/abstractitptyltd/abstractit-icinga/issues",
+  "issues_url": "https://github.com/abstractitptyltd/abstractit-icinga/issues",
   "tags": ["monitoring","icinga"],
   "operatingsystem_support": [
-    {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "6"
-      ]
-    },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "12.04"
       ]
-    },
+    }
   ],
   "dependencies": [
     {
