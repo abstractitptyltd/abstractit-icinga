@@ -1,4 +1,4 @@
-##2014-03-27 - Pete Brown <pete@abstractit.com.au> 1.2.2
+##2014-07-26 - Pete Brown <pete@abstractit.com.au> 1.2.2
 ###Summary
 Bugfix Release
 Updating to work with new apache module
