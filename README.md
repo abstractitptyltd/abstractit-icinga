@@ -1,7 +1,7 @@
 abstractit-icinga
 ====
 
-[![Build Status](https://travis-ci.org/abstractitptyltd/abstractit-icinga.svg?branch=master)](https://travis-ci.org/abstractitptyltd/abstractit-icinga)
+[![Build Status](https://travis-ci.org/abstractitptyltd/abstractit-icinga.svg?branch=production)](https://travis-ci.org/abstractitptyltd/abstractit-icinga)
 
 ####Table of Contents
 
