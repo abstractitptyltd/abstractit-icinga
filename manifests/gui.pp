@@ -18,10 +18,10 @@ class icinga::gui {
     mpm_module    => false,
   }
 
-  class { ':apache:mod::prefork':
+  class { '::apache::mod::prefork':
   }
 
-  class { ':apache:mod::php':
+  class { '::apache::mod::php':
   }
 
   # check if we are running pgsql and fix port if it is set to default mysql port
