@@ -1,11 +1,11 @@
 {
   "name": "abstractit-icinga",
-  "version": "1.2.2-rc4",
+  "version": "1.2.2-rc5",
   "author": "Abstract IT",
   "license": "Apache v2 Licence",
   "summary": "manage an icinga server",
   "source": "https://github.com/abstractitptyltd/abstractit-icinga",
-  "project_page": "(https://github.com/abstractitptyltd/abstractit-icinga)",
+  "project_page": "https://github.com/abstractitptyltd/abstractit-icinga",
   "issues_url": "https://github.com/abstractitptyltd/abstractit-icinga/issues",
   "tags": ["monitoring","icinga"],
   "operatingsystem_support": [
