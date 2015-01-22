@@ -1,4 +1,14 @@
-##2015-01-22 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc6
+##2015-01-23 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc7
+###Summary
+Bugfix Release
+
+####Bugfixes
+Fixing location of pnp4nagios proker lib
+
+####Known bugs
+* No known bugs. Please let us know if you find any.
+
+##2015-01-23 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc6
 ###Summary
 Bugfix Release
 
@@ -8,8 +18,6 @@ Add apache::mod::rewrite so the rewrites work for ther web gui
 Now requires stdlib 4.5.1 so include security patches.
 Also requires apt 1.7.0
 
-####Known bugs
-* No known bugs. Please let us know if you find any.
 
 ##2015-01-22 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc5
 ###Summary
