@@ -1,3 +1,16 @@
+##2015-01-22 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc6
+###Summary
+Bugfix Release
+
+####Bugfixes
+Added requires for confir files so the packages get installed first.
+Add apache::mod::rewrite so the rewrites work for ther web gui
+Now requires stdlib 4.5.1 so include security patches.
+Also requires apt 1.7.0
+
+####Known bugs
+* No known bugs. Please let us know if you find any.
+
 ##2015-01-22 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc5
 ###Summary
 Bugfix Release
@@ -7,8 +20,6 @@ Fixing project_page link
 Updating changelog with recent releases
 Fix config for new web gui (it requires mod_rewrite)
 
-####Known bugs
-* No known bugs. Please let us know if you find any.
 
 ##2015-12-15 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc4
 ###Summary

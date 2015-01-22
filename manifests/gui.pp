@@ -24,6 +24,9 @@ class icinga::gui {
   class { '::apache::mod::php':
   }
 
+  class { '::apache::mod::rewrite':
+  }
+
   # check if we are running pgsql and fix port if it is set to default mysql port
   if $icinga::params::web_db_server == 'pgsql' and $icinga::params::web_db_port == 3306 {
     $web_db_port = 5432
@@ -55,6 +58,7 @@ class icinga::gui {
       group   => $icinga_group,
       mode    => '0644',
       content => template('icinga/cgi.cfg.erb'),
+      require => Class['icinga::install'],
     }
 
     file { '/var/log/icinga/gui':
@@ -73,6 +77,7 @@ class icinga::gui {
       group   => root,
       mode    => '0644',
       content => template('icinga/databases.xml.erb'),
+      require => Class['icinga::install'],
     }
 
     file { '/etc/icinga-web/conf.d/auth.xml':
@@ -80,6 +85,7 @@ class icinga::gui {
       group   => root,
       mode    => '0644',
       content => template('icinga/auth.xml.erb'),
+      require => Class['icinga::install'],
     }
 
     # this still needs work
@@ -95,6 +101,7 @@ class icinga::gui {
       owner  => $::apache::params::user,
       group  => $::apache::params::group,
       mode   => '0775',
+      require => Class['icinga::install'],
     }
 
     file { '/var/log/icinga/web':
@@ -102,6 +109,7 @@ class icinga::gui {
       owner  => $icinga_user,
       group  => $icinga_cmd_grp,
       mode   => '2775',
+      require => Class['icinga::install'],
     }
   }
 
