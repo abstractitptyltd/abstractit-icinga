@@ -1,4 +1,34 @@
-##2014-07-26 - Pete Brown <pete@abstractit.com.au> 1.2.2
+##2015-01-22 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc5
+###Summary
+Bugfix Release
+
+####Bugfixes
+Fixing project_page link
+Updating changelog with recent releases
+Fix config for new web gui (it requires mod_rewrite)
+
+####Known bugs
+* No known bugs. Please let us know if you find any.
+
+##2015-12-15 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc4
+###Summary
+Bugfix Release
+
+####Bugfixes
+new apache includes apache mod authn_file
+
+
+##2014-12-04 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc3
+###Summary
+Bugfix Release
+
+####Bugfixes
+Requiring version 1.2.0 of puppetlabs-apache module
+Fixing travis link
+Fixing apache class setup @gerapeldoorn
+
+
+##2014-07-26 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc2
 ###Summary
 Bugfix Release
 Updating to work with new apache module
@@ -12,8 +42,6 @@ Added official repository for icinga.
 - Style guide fixes.
 - fixing bugs resulting from reliance on my monitoring modules.
 
-####Known bugs
-* No known bugs. Please let us know if you find any.
 
 ---
 ##### 2013-07-23 - Pete Brown <pete@abstractit.com.au> - 1.2.1

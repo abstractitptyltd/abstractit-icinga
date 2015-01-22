@@ -4,7 +4,17 @@ ScriptAlias <%= scope.lookupvar('icinga::params::cgi_url') %> "<%= scope.lookupv
 <% if scope.lookupvar('icinga::params::ssl') == true %>   SSLRequireSSL<% end %>
    Options ExecCGI
    AllowOverride None
-   <%= scope.lookupvar('icinga::gui::auth_conf') %>
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
 </Directory>
 
 <% if scope.lookupvar("icinga::params::icinga_css_path_real") != '' -%>
@@ -14,7 +24,17 @@ Alias /icinga/stylesheets "<%= scope.lookupvar("icinga::params::icinga_css_path_
    Options FollowSymlinks
    AllowOverride All
    DirectoryIndex index.html
-<%= scope.lookupvar('icinga::gui::auth_conf') %>
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
 </Directory>
 <% end -%>
 
@@ -25,5 +45,15 @@ Alias /icinga "<%= scope.lookupvar("icinga::params::icinga_html_path_real") %>"
    Options FollowSymlinks
    AllowOverride All
    DirectoryIndex index.html
-<%= scope.lookupvar('icinga::gui::auth_conf') %>
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
 </Directory>
