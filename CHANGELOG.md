@@ -1,3 +1,23 @@
+##2015-01-23 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc8
+###Summary
+Bugfix Release
+
+####Features
+add variable for enabling and disabling ido
+switched to new module loading setup for icinga brokers
+manage defaults and init files for icinga and ido2db
+use new enable_ido variable to enable iso2db service and load module
+
+####Bugfixes
+fix ido and perfdata setup
+fix class dependencies
+fix location of embeded perl binary
+fix lockfile location for ido2db
+
+####Known bugs
+* No known bugs. Please let us know if you find any.
+
+
 ##2015-01-23 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc7
 ###Summary
 Bugfix Release
@@ -5,8 +25,6 @@ Bugfix Release
 ####Bugfixes
 Fixing location of pnp4nagios proker lib
 
-####Known bugs
-* No known bugs. Please let us know if you find any.
 
 ##2015-01-23 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc6
 ###Summary
