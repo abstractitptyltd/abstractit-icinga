@@ -4,13 +4,21 @@
 # full docs in README.md
 
 class icinga {
-  class{'icinga::params':} ->
-  class{'icinga::install':} ->
-  class{'icinga::users':} ->
-  class{'icinga::idoconfig':} ~>
-  class{'icinga::idoservice':} ->
-  class{'icinga::config':} ~>
-  class{'icinga::service':} ->
+  include icinga::users
+  include icinga::install
+  include icinga::idoconfig
+  include icinga::idoservice
+  include icinga::config
+  include icinga::service
+
+  Class['icinga::users'] ->
+  Class['icinga::install']
+
+  Class['icinga::idoconfig'] ~>
+  Class['icinga::idoservice']
+
+  Class['icinga::config'] ~>
+  Class['icinga::service'] ->
   Class['icinga']
 
   if ( $icinga::params::gui_type =~ /^(classic|web|both)$/ ) {

@@ -33,6 +33,7 @@ class icinga::params (
   $admin_pager = 'pageicinga@localhost',
   $stalking = 0,
   $flap_detection = 1,
+  $enable_ido = true,
   $ido_db_server = 'mysql',
   $ido_db_host = 'localhost',
   $ido_db_port = 3306,

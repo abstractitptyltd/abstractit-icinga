@@ -6,6 +6,8 @@ class icinga::idoconfig {
 
   include icinga::params
 
+  $icinga_user = $icinga::params::icinga_user
+  $icinga_group = $icinga::params::icinga_group
   $ido_db_server = $icinga::params::ido_db_server
   $ido_db_host = $icinga::params::ido_db_host
   # check if we are running pgsql and fix port if it is set to default mysql port
@@ -20,11 +22,17 @@ class icinga::idoconfig {
   # db install file lives here
   # /usr/share/doc/icinga-idoutils-libdbi-mysql-$ICINGA_VERSION/db/${icinga::params::ido_db_server}
 
+  file { '/etc/init.d/ido2db':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template('icinga/ido_init.erb'),
+  }
+
   file { '/etc/icinga/ido2db.cfg':
     owner   => root,
     group   => root,
     mode    => '0660',
-    notify  => Class[icinga::idoservice],
     content => template('icinga/ido2db.cfg.erb'),
   }
 

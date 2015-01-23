@@ -118,7 +118,7 @@ status_update_interval=10
 # This determines the effective user that Icinga should run as.
 # You can either supply a username or a UID.
 
-icinga_user=<%= scope.lookupvar('icinga::params::icinga_user') %>
+icinga_user=<%= @icinga_user %>
 
 
 
@@ -126,7 +126,7 @@ icinga_user=<%= scope.lookupvar('icinga::params::icinga_user') %>
 # This determines the effective group that Icinga should run as.
 # You can either supply a group name or a GID.
 
-icinga_group=<%= scope.lookupvar('icinga::params::icinga_group') %>
+icinga_group=<%= @icinga_group %>
 
 
 
@@ -189,7 +189,7 @@ external_command_buffer_slots=4096
 # This is the lockfile that Icinga will use to store its PID number
 # in when it is running in daemon mode.
 
-lock_file=/var/run/icinga.pid
+lock_file=/var/run/icinga/icinga.pid
 
 
 
@@ -932,12 +932,6 @@ enable_event_handlers=1
 
 process_performance_data=<%= scope.function_bool2num([@perfdata]) %>
 
-<% if @perfdata == true -%>
-<% if @perfdatatype == 'pnp4nagios' -%>
-broker_module=/usr/lib/pnp4nagios/npcdmod.o config_file=/etc/pnp4nagios/npcd.cfg
-<% end -%>
-<% end -%>
-
 # HOST AND SERVICE PERFORMANCE DATA PROCESSING COMMANDS
 # These commands are run after every host and service check is
 # performed.  These commands are executed only if the
@@ -1264,7 +1258,7 @@ date_format=iso8601
 # embedded Perl interpreter) is located.  If you didn't compile
 # Icinga with embedded Perl support, this option has no effect.
 
-p1_file=/usr/lib<% if @hardwareisa == 'x86_64' %>64<% end %>/icinga/p1.pl
+p1_file=/usr/lib/icinga/p1.pl
 
 
 

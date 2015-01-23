@@ -28,7 +28,7 @@ class icinga::service {
       default   => '/etc/init.d/icinga reload',
       'systemd' => "systemctl reload ${servicename}"
     },
-    require    => Class[icinga::idoservice],
+    require    => [Class['icinga::config'],Class['icinga::idoservice']],
   }
 
 }

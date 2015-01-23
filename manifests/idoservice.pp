@@ -4,6 +4,19 @@
 
 class icinga::idoservice {
 
+  include icinga::params
+  $enable_ido = $icinga::params::enable_ido
+  case $enable_ido {
+    default: {
+      $ido_enable = true
+      $ido_ensure = 'running'
+    }
+    false: {
+      $ido_enable = false
+      $ido_ensure = 'stopped'
+    }
+  }
+
   case $::lsbdistdescription {
     ## some tricky logic to use systemd on fedora 17+
     /Fedora release (.+)/: {
@@ -18,10 +31,10 @@ class icinga::idoservice {
     }
   }
   service { 'ido2db':
-    ensure     => running,
+    ensure     => $ido_ensure,
     name       => $servicename,
     provider   => $provider,
-    enable     => true,
+    enable     => $ido_enable,
     hasstatus  => true,
     hasrestart => true,
     require    => Class[icinga::idoconfig],

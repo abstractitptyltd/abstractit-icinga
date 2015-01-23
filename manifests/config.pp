@@ -10,6 +10,7 @@ class icinga::config {
   $icinga_group = $icinga::params::icinga_group
   $icinga_cmd_grp = $icinga::params::icinga_cmd_grp
   $notifications = $icinga::params::notifications
+  $enable_ido = $icinga::params::enable_ido
   $embedded_perl = $icinga::params::embedded_perl
   $perfdata = $icinga::params::perfdata
   $perfdatatype = $icinga::params::perfdatatype
@@ -30,6 +31,34 @@ class icinga::config {
   $stalking = $icinga::params::stalking
   $flap_detection = $icinga::params::flap_detection
 
+  $ensure_idoutils = $enable_ido? {
+    default => 'file',
+    false => 'absent',
+  }
+
+  $ensure_perf_mod = $perfdata? {
+    default => 'file',
+    false => 'absent',
+  }
+
+  file { '/etc/default/icinga':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('icinga/defaults.erb'),
+    notify  => [Class[icinga::service],Class[icinga::idoservice]],
+    require => Class[icinga::install],
+  }
+
+  file { '/etc/init.d/icinga':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template('icinga/init.erb'),
+    notify  => Class[icinga::service],
+    require => Class[icinga::install],
+  }
+
   file { '/etc/icinga/icinga.cfg':
     owner   => $icinga_user,
     group   => $icinga_group,
@@ -38,14 +67,31 @@ class icinga::config {
     content => template('icinga/icinga.cfg.erb'),
   }
 
-  file { '/etc/icinga/idomod.cfg':
+  file { '/etc/icinga/modules/perf_module.cfg':
+    ensure => $ensure_perf_mod,
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0644',
+    notify  => Class[icinga::service],
+    content => template('icinga/perf_module.cfg.erb'),
+  }
+
+  file { '/etc/icinga/modules/idoutils.cfg':
+    ensure => $ensure_idoutils,
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0644',
+    notify  => Class[icinga::service],
+    content => template('icinga/idoutils_module.cfg.erb'),
+  }
+
+  file { '/etc/icinga/idoutils.cfg':
     owner   => $icinga_user,
     group   => $icinga_group,
     mode    => '0644',
     notify  => Class[icinga::service],
     content => template('icinga/idomod.cfg.erb'),
   }
-
   file { '/etc/icinga/resource.cfg':
     owner   => $icinga_user,
     group   => $icinga_group,
@@ -94,6 +140,13 @@ class icinga::config {
     owner  => $icinga_user,
     group  => $icinga_cmd_grp,
     mode   => '2755',
+  }
+
+  file { '/var/run/icinga':
+    ensure => directory,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0775',
   }
 
 }

@@ -8,7 +8,7 @@
 # This is the lockfile that IDO2DB will use to store its PID number
 # in when it is running in daemon mode.
 
-lock_file=/var/run/ido2db.pid
+lock_file=/var/run/icinga/ido2db.pid
 
 
 
@@ -16,8 +16,8 @@ lock_file=/var/run/ido2db.pid
 # These options determine the user/group that the daemon should run as.
 # You can specify a number (uid/gid) or a name for either option.
 
-ido2db_user=icinga
-ido2db_group=icinga
+ido2db_user=<%= @icinga_user %>
+ido2db_group=<%= @icinga_group %>
 
 
 
