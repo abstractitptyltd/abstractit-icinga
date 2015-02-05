@@ -1,6 +1,6 @@
 name 'abstractit-icinga'
 author 'Abstract IT'
-version '1.2.2-rc8'
+version '1.2.2-rc9'
 summary 'manage an icinga server'
 description "manage icinga server with puppet"
 project_page 'https://github.com/abstractitptyltd/puppet-icinga'
