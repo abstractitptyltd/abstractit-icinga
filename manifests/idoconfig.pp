@@ -27,6 +27,7 @@ class icinga::idoconfig {
     group   => 'root',
     mode    => '0755',
     content => template('icinga/ido_init.erb'),
+    require => Class[icinga::install],
   }
 
   file { '/etc/icinga/ido2db.cfg':
@@ -34,6 +35,14 @@ class icinga::idoconfig {
     group   => root,
     mode    => '0660',
     content => template('icinga/ido2db.cfg.erb'),
+    require => Class[icinga::install],
+  }
+
+  file { '/var/run/icinga/ido2db.pid':
+    ensure => file,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0644',
   }
 
 }

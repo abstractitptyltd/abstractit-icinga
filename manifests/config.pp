@@ -65,6 +65,7 @@ class icinga::config {
     mode    => '0644',
     notify  => Class[icinga::service],
     content => template('icinga/icinga.cfg.erb'),
+    require => Class[icinga::install],
   }
 
   file { '/etc/icinga/modules/perf_module.cfg':
@@ -74,6 +75,7 @@ class icinga::config {
     mode    => '0644',
     notify  => Class[icinga::service],
     content => template('icinga/perf_module.cfg.erb'),
+    require => Class[icinga::install],
   }
 
   file { '/etc/icinga/modules/idoutils.cfg':
@@ -83,6 +85,7 @@ class icinga::config {
     mode    => '0644',
     notify  => Class[icinga::service],
     content => template('icinga/idoutils_module.cfg.erb'),
+    require => Class[icinga::install],
   }
 
   file { '/etc/icinga/idoutils.cfg':
@@ -91,6 +94,7 @@ class icinga::config {
     mode    => '0644',
     notify  => Class[icinga::service],
     content => template('icinga/idomod.cfg.erb'),
+    require => Class[icinga::install],
   }
   file { '/etc/icinga/resource.cfg':
     owner   => $icinga_user,
@@ -98,6 +102,7 @@ class icinga::config {
     mode    => '0644',
     notify  => Class[icinga::service],
     content => template('icinga/resource.cfg.erb'),
+    require => Class[icinga::install],
   }
 
   file { '/etc/icinga/conf.d':
@@ -105,6 +110,7 @@ class icinga::config {
     owner  => $icinga_user,
     group  => $icinga_group,
     mode   => '0775',
+    require => Class[icinga::install],
   }
 
   file { '/var/log/icinga':
@@ -119,6 +125,7 @@ class icinga::config {
     owner  => $icinga_user,
     group  => $icinga_group,
     mode   => '0775',
+    require => File['/var/log/icinga']
   }
 
   file { '/var/spool/icinga':
@@ -133,6 +140,7 @@ class icinga::config {
     owner  => $icinga_user,
     group  => $icinga_group,
     mode   => '0775',
+    require => File['/var/spool/icinga']
   }
 
   file { '/var/spool/icinga/cmd':
@@ -140,6 +148,7 @@ class icinga::config {
     owner  => $icinga_user,
     group  => $icinga_cmd_grp,
     mode   => '2755',
+    require => File['/var/spool/icinga']
   }
 
   file { '/var/run/icinga':
@@ -147,6 +156,14 @@ class icinga::config {
     owner  => $icinga_user,
     group  => $icinga_group,
     mode   => '0775',
+  }
+
+  file { '/var/run/icinga/icinga.pid':
+    ensure => file,
+    owner  => $icinga_user,
+    group  => $icinga_group,
+    mode   => '0644',
+    require => File['/var/run/icinga']
   }
 
 }
