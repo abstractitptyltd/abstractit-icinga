@@ -27,6 +27,9 @@ class icinga::gui {
   class { '::apache::mod::rewrite':
   }
 
+  class { '::apache::mod::cgi':
+  }
+
   # check if we are running pgsql and fix port if it is set to default mysql port
   if $icinga::params::web_db_server == 'pgsql' and $icinga::params::web_db_port == 3306 {
     $web_db_port = 5432
