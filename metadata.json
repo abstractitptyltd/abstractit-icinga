@@ -1,6 +1,6 @@
 {
   "name": "abstractit-icinga",
-  "version": "1.2.2-rc10",
+  "version": "1.2.2-rc11",
   "author": "Abstract IT",
   "license": "Apache v2 Licence",
   "summary": "manage an icinga server",
