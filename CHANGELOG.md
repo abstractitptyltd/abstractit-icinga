@@ -1,3 +1,15 @@
+##2015-02-12 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc10
+###Summary
+Bugfix Release
+
+####Bugfixes
+Make sure classic gui actually uses auth
+It wasn't even including it at all.
+
+####Known bugs
+* No known bugs. Please let us know if you find any.
+
+
 ##2015-02-05 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc9
 ###Summary
 Bugfix Release
@@ -5,9 +17,6 @@ Bugfix Release
 ####Bugfixes
 make sure pid files are actually owned by the user running the process
 added requires so packages are installed before config files get setup
-
-####Known bugs
-* No known bugs. Please let us know if you find any.
 
 
 ##2015-01-23 - Pete Brown <pete@abstractit.com.au> 1.2.2-rc8
