@@ -1,0 +1,5 @@
+forge 'https://forge.puppetlabs.com'
+mod 'puppetlabs-stdlib'
+mod 'puppetlabs-apt'
+mod 'puppetlabs-apache'
+mod 'abstractit-pnp4nagios'

@@ -1,0 +1,5 @@
+mysql::server::root_password: 'something_secure'
+#icinga::manage_repo: false
+icinga::web_auth_users:
+  admin:
+    password: icinga

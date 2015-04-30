@@ -1,32 +1,37 @@
 # Class icinga::idoconfig
 #
 # setuop ido for icinga
+#
+# This should not be called directly
 
-class icinga::idoconfig {
+class icinga::idoconfig (
+  $icinga_user   = $::icinga::icinga_user,
+  $icinga_group  = $::icinga::icinga_group,
+  $manage_dbs    = $::icinga::manage_dbs,
+  $ido_db_server = $::icinga::ido_db_server,
+  $ido_db_host   = $::icinga::ido_db_host,
+  $ido_db_name   = $::icinga::ido_db_name,
+  $ido_db_user   = $::icinga::ido_db_user,
+  $ido_db_pass   = $::icinga::ido_db_pass,
+  $ido_db_port   = $::icinga::ido_db_port
+  
+) {
 
-  include icinga::params
-
-  $icinga_user = $icinga::params::icinga_user
-  $icinga_group = $icinga::params::icinga_group
-  $ido_db_server = $icinga::params::ido_db_server
-  $ido_db_host = $icinga::params::ido_db_host
-  # check if we are running pgsql and fix port if it is set to default mysql port
-  if $icinga::params::ido_db_server == 'pgsql' and $icinga::params::ido_db_port == 3306 {
-    $ido_db_port = 5432
-  } else {
-    $ido_db_port = $icinga::params::ido_db_port
-  }
-  $ido_db_name = $icinga::params::ido_db_name
-  $ido_db_user = $icinga::params::ido_db_user
-  $ido_db_pass = $icinga::params::ido_db_pass
   # db install file lives here
-  # /usr/share/doc/icinga-idoutils-libdbi-mysql-$ICINGA_VERSION/db/${icinga::params::ido_db_server}
+  # /usr/share/doc/icinga-idoutils-libdbi-mysql-$ICINGA_VERSION/db/${icinga::server}
+  if $manage_dbs {
+    exec {'create idodb db':
+      command => "/usr/bin/mysql -u${ido_db_user} -p${ido_db_pass} ${ido_db_name} < /usr/share/doc/icinga-idoutils/examples/mysql/mysql.sql",
+      unless  => "/usr/bin/mysql -u${ido_db_user} -p${ido_db_pass} -e'show tables' ${ido_db_name} | grep icinga_dbversion",
+      require => Mysql::Db[$ido_db_name],
+    }
+  }
 
   file { '/etc/init.d/ido2db':
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => template('icinga/ido_init.erb'),
+    source  => 'puppet:///modules/icinga//etc/init.d/ido2db',
     require => Class[icinga::install],
   }
 
@@ -34,7 +39,7 @@ class icinga::idoconfig {
     owner   => root,
     group   => root,
     mode    => '0660',
-    content => template('icinga/ido2db.cfg.erb'),
+    content => template('icinga/etc/icinga/ido2db.cfg.erb'),
     require => Class[icinga::install],
   }
 
