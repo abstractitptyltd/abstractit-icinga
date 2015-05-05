@@ -127,8 +127,11 @@ db_host=<%= @ido_db_host %>
 #
 # Note: ocilib will ignore this, you have to modify your tnsnames.ora
 
+<% if @ido_db_name == 'pgsql' and $ido_db_port == 3306 -%>
+db_port=5432
+<%- else -%>
 db_port=<%= @ido_db_port %>
-
+<%- end -%>
 
 # DATABASE SOCKET
 # Optional db_socket allows to specify a different socket location.

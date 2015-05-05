@@ -1,35 +1,33 @@
 # Class icinga::config
 #
 # Configures icinga using the defaults set in the params class
-
-class icinga::config {
-
-  include icinga::params
-
-  $icinga_user = $icinga::params::icinga_user
-  $icinga_group = $icinga::params::icinga_group
-  $icinga_cmd_grp = $icinga::params::icinga_cmd_grp
-  $notifications = $icinga::params::notifications
-  $enable_ido = $icinga::params::enable_ido
-  $embedded_perl = $icinga::params::embedded_perl
-  $perfdata = $icinga::params::perfdata
-  $perfdatatype = $icinga::params::perfdatatype
-  $admin_group = $icinga::params::admin_group
-  $nagios_plugins = $icinga::params::nagios_plugins
-  $nagios_extra_plugins = $icinga::params::nagios_extra_plugins
-  $db_password = $icinga::params::db_password
-  $email_password = $icinga::params::email_password
-  $check_timeout = $icinga::params::check_timeout
-  $clickatell_api_id = hiera('monitoring::clickatell_api_id', undef)
-  $clickatell_username = hiera('monitoring::clickatell_username', undef)
-  $clickatell_password = hiera('monitoring::clickatell_password', undef)
-  $is_pbx = hiera('is_pbx', false)
-  $pbx_mngr_pw = hiera('monitoring::pbx_mngr_pw', undef)
-  $debug = $icinga::params::debug
-  $admin_email = $icinga::params::admin_email
-  $admin_pager = $icinga::params::admin_pager
-  $stalking = $icinga::params::stalking
-  $flap_detection = $icinga::params::flap_detection
+# should not be called directly
+class icinga::config (
+  $icinga_user          = $::icinga::icinga_user,
+  $icinga_group         = $::icinga::icinga_group,
+  $icinga_cmd_grp       = $::icinga::icinga_cmd_grp,
+  $notifications        = $::icinga::notifications,
+  $enable_ido           = $::icinga::enable_ido,
+  $embedded_perl        = $::icinga::embedded_perl,
+  $perfdata             = $::icinga::perfdata,
+  $perfdatatype         = $::icinga::perfdatatype,
+  $admin_group          = $::icinga::admin_group,
+  $nagios_plugins       = $::icinga::nagios_plugins,
+  $nagios_extra_plugins = $::icinga::nagios_extra_plugins,
+  $db_password          = $::icinga::db_password,
+  $email_password       = $::icinga::email_password,
+  $check_timeout        = $::icinga::check_timeout,
+  $clickatell_api_id    = $::icinga::clickatell_api_id,
+  $clickatell_username  = $::icinga::clickatell_username,
+  $clickatell_password  = $::icinga::clickatell_password,
+  $is_pbx               = $::icinga::is_pbx,
+  $pbx_mngr_pw          = $::icinga::pbx_mngr_pw,
+  $debug                = $::icinga::debug,
+  $admin_email          = $::icinga::admin_email,
+  $admin_pager          = $::icinga::admin_pager,
+  $stalking             = $::icinga::stalking,
+  $flap_detection       = $::icinga::flap_detection,
+) {
 
   $ensure_idoutils = $enable_ido? {
     default => 'file',
@@ -45,17 +43,8 @@ class icinga::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('icinga/defaults.erb'),
+    content => template('icinga/etc/default/icinga.erb'),
     notify  => [Class[icinga::service],Class[icinga::idoservice]],
-    require => Class[icinga::install],
-  }
-
-  file { '/etc/init.d/icinga':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => template('icinga/init.erb'),
-    notify  => Class[icinga::service],
     require => Class[icinga::install],
   }
 
@@ -64,27 +53,27 @@ class icinga::config {
     group   => $icinga_group,
     mode    => '0644',
     notify  => Class[icinga::service],
-    content => template('icinga/icinga.cfg.erb'),
+    content => template('icinga/etc/icinga/icinga.cfg.erb'),
     require => Class[icinga::install],
   }
 
   file { '/etc/icinga/modules/perf_module.cfg':
-    ensure => $ensure_perf_mod,
+    ensure  => $ensure_perf_mod,
     owner   => $icinga_user,
     group   => $icinga_group,
     mode    => '0644',
     notify  => Class[icinga::service],
-    content => template('icinga/perf_module.cfg.erb'),
+    source  => 'puppet:///modules/icinga/etc/icinga/modules/perf_module.cfg',
     require => Class[icinga::install],
   }
 
   file { '/etc/icinga/modules/idoutils.cfg':
-    ensure => $ensure_idoutils,
+    ensure  => $ensure_idoutils,
     owner   => $icinga_user,
     group   => $icinga_group,
     mode    => '0644',
     notify  => Class[icinga::service],
-    content => template('icinga/idoutils_module.cfg.erb'),
+    source  => 'puppet:///modules/icinga/etc/icinga/modules/idoutils.cfg',
     require => Class[icinga::install],
   }
 
@@ -93,7 +82,7 @@ class icinga::config {
     group   => $icinga_group,
     mode    => '0644',
     notify  => Class[icinga::service],
-    content => template('icinga/idomod.cfg.erb'),
+    source  => 'puppet:///modules/icinga/etc/icinga/idoutils.cfg',
     require => Class[icinga::install],
   }
   file { '/etc/icinga/resource.cfg':
@@ -101,15 +90,15 @@ class icinga::config {
     group   => $icinga_group,
     mode    => '0644',
     notify  => Class[icinga::service],
-    content => template('icinga/resource.cfg.erb'),
+    content => template('icinga/etc/icinga/resource.cfg.erb'),
     require => Class[icinga::install],
   }
 
   file { '/etc/icinga/conf.d':
-    ensure => directory,
-    owner  => $icinga_user,
-    group  => $icinga_group,
-    mode   => '0775',
+    ensure  => directory,
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0775',
     require => Class[icinga::install],
   }
 
@@ -121,10 +110,10 @@ class icinga::config {
   }
 
   file { '/var/log/icinga/archives':
-    ensure => directory,
-    owner  => $icinga_user,
-    group  => $icinga_group,
-    mode   => '0775',
+    ensure  => directory,
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0775',
     require => File['/var/log/icinga']
   }
 
@@ -136,18 +125,18 @@ class icinga::config {
   }
 
   file { '/var/spool/icinga/checkresults':
-    ensure => directory,
-    owner  => $icinga_user,
-    group  => $icinga_group,
-    mode   => '0775',
+    ensure  => directory,
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0775',
     require => File['/var/spool/icinga']
   }
 
   file { '/var/spool/icinga/cmd':
-    ensure => directory,
-    owner  => $icinga_user,
-    group  => $icinga_cmd_grp,
-    mode   => '2755',
+    ensure  => directory,
+    owner   => $icinga_user,
+    group   => $icinga_cmd_grp,
+    mode    => '2755',
     require => File['/var/spool/icinga']
   }
 
@@ -159,12 +148,11 @@ class icinga::config {
   }
 
   file { '/var/run/icinga/icinga.pid':
-    ensure => file,
-    owner  => $icinga_user,
-    group  => $icinga_group,
-    mode   => '0644',
+    ensure  => file,
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0644',
     require => File['/var/run/icinga']
   }
-
 }
 

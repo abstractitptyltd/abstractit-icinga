@@ -16,7 +16,7 @@
 	</setting>
 
 	<setting name="provider">
-<% if scope.lookupvar('icinga::params::web_auth_type') == 'internal' -%>
+<% if @web_auth_type == 'internal' -%>
 		<ae:parameter name="internal">
 			<ae:parameter name="auth_module">AppKit</ae:parameter>
 			<ae:parameter name="auth_provider">Auth.Provider.Database</ae:parameter>
@@ -24,7 +24,7 @@
 			<ae:parameter name="auth_enable">true</ae:parameter>
 			<ae:parameter name="auth_authoritative">true</ae:parameter>
 		</ae:parameter>
-<% elsif scope.lookupvar('icinga::params::web_auth_type') == 'httpbasic' -%>
+<% elsif @web_auth_type == 'httpbasic' -%>
 		<ae:parameter name="http-basic-authentication">
 			<ae:parameter name="auth_module">AppKit</ae:parameter>
 			<ae:parameter name="auth_provider">Auth.Provider.HTTPBasicAuthentication</ae:parameter>
@@ -35,8 +35,8 @@
 			<ae:parameter name="http_source">_SERVER</ae:parameter>
 			<ae:parameter name="http_realm">Icinga Access</ae:parameter>
 		</ae:parameter>
-<% elsif scope.lookupvar('icinga::params::web_auth_type') == 'ldap' -%>
-		<ae:parameter name="<%= scope.lookupvar('icinga::params::web_auth_name') %>">
+<% elsif @web_auth_type == 'ldap' -%>
+		<ae:parameter name="<%= @web_auth_name %>">
 			<ae:parameter name="auth_module">AppKit</ae:parameter>
 			<ae:parameter name="auth_provider">Auth.Provider.LDAP</ae:parameter>
 			<ae:parameter name="auth_enable">true</ae:parameter>
@@ -44,20 +44,20 @@
 			<ae:parameter name="auth_create">true</ae:parameter>
 			<ae:parameter name="auth_update">true</ae:parameter>
 			<ae:parameter name="auth_map">
-				<ae:parameter name="user_firstname"><%= scope.lookupvar('icinga::params::ldap_firstname') %></ae:parameter>
-				<ae:parameter name="user_lastname"><%= scope.lookupvar('icinga::params::ldap_lastname') %></ae:parameter>
-				<ae:parameter name="user_email"><%= scope.lookupvar('icinga::params::ldap_email') %></ae:parameter> 
+				<ae:parameter name="user_firstname"><%= @ldap_firstname %></ae:parameter>
+				<ae:parameter name="user_lastname"><%= @ldap_lastname %></ae:parameter>
+				<ae:parameter name="user_email"><%= @ldap_email %></ae:parameter> 
 			</ae:parameter>
-			<ae:parameter name="ldap_dsn">ldap<% if scope.lookupvar('icinga::params::ldap_security') == 'ssl' %>s<% end %>://<%= scope.lookupvar('icinga::params::ldap_server') %>/</ae:parameter>
-			<ae:parameter name="ldap_start_tls"><% if scope.lookupvar('icinga::params::ldap_security') == 'tls' %>true<% else %>false<% end %></ae:parameter>
-			<ae:parameter name="ldap_basedn"><%= scope.lookupvar('icinga::params::ldap_basedn') %></ae:parameter>
-			<ae:parameter name="ldap_binddn"><%= scope.lookupvar('icinga::params::ldap_binddn') %></ae:parameter>
-			<ae:parameter name="ldap_bindpw"><![CDATA[<%= scope.lookupvar('icinga::params::ldap_bindpw') %>]]></ae:parameter>
-			<ae:parameter name="ldap_userattr"><%= scope.lookupvar('icinga::params::ldap_userattr') %></ae:parameter>
-<% if scope.lookupvar('icinga::params::ldap_auth_group') -%>
-			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= scope.lookupvar('icinga::params::ldap_userattr') %>=__USERNAME__)(<%= scope.lookupvar('icinga::params::ldap_groupattr') %>=<%= scope.lookupvar('icinga::params::ldap_auth_group') %>))]]></ae:parameter>
+			<ae:parameter name="ldap_dsn">ldap<% if @ldap_security == 'ssl' %>s<% end %>://<%= @ldap_server %>/</ae:parameter>
+			<ae:parameter name="ldap_start_tls"><% if @ldap_security == 'tls' %>true<% else %>false<% end %></ae:parameter>
+			<ae:parameter name="ldap_basedn"><%= @ldap_basedn %></ae:parameter>
+			<ae:parameter name="ldap_binddn"><%= @ldap_binddn %></ae:parameter>
+			<ae:parameter name="ldap_bindpw"><![CDATA[<%= @ldap_bindpw %>]]></ae:parameter>
+			<ae:parameter name="ldap_userattr"><%= @ldap_userattr %></ae:parameter>
+<% if @ldap_auth_group -%>
+			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= @ldap_userattr %>=__USERNAME__)(<%= @ldap_groupattr %>=<%= @ldap_auth_group') %>))]]></ae:parameter>
 <% else -%>
-			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= scope.lookupvar('icinga::params::ldap_userattr') %>=__USERNAME__)<%= scope.lookupvar('icinga::params::ldap_filter_extra') %>)]]></ae:parameter>
+			<ae:parameter name="ldap_filter_user"><![CDATA[(&(<%= @ldap_userattr %>=__USERNAME__)<%= @ldap_filter_extra %>)]]></ae:parameter>
 <% end -%>
 		</ae:parameter>
 <% end -%>

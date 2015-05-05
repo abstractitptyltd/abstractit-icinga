@@ -9,12 +9,14 @@ class icinga::service {
     /Fedora release (.+)/: {
       if versioncmp($1,'17') >= 0 {
         $servicename = 'icinga.service'
-        $provider = 'systemd'
+        $provider    = 'systemd'
+        $restart     = "systemctl reload ${servicename}"
       }
     }
     default: {
       $servicename = 'icinga'
-      $provider = undef
+      $provider    = undef
+      $restart     = '/etc/init.d/icinga reload'
     }
   }
   service { 'icinga':
@@ -24,10 +26,7 @@ class icinga::service {
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    restart    => $provider ? {
-      default   => '/etc/init.d/icinga reload',
-      'systemd' => "systemctl reload ${servicename}"
-    },
+    restart    => $restart,
     require    => [Class['icinga::config'],Class['icinga::idoservice']],
   }
 

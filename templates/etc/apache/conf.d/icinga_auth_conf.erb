@@ -1,0 +1,20 @@
+<%= @apache_allow_stanza %>
+    AuthName "Icinga Access"
+    AuthType Basic
+<% if @web_auth_type == 'ldap' -%>
+    AuthBasicProvider ldap
+    AuthLDAPRemoteUserAttribute <%= @ldap_userattr %>
+##    AuthLDAPGroupAttribute <%= @ldap_groupattr %>
+    AuthLDAPURL "ldap<% if @ldap_security == 'ssl' %>s<% end %>://<%= @ldap_server %>/<%= @ldap_groupdn %>?<%= @ldap_userattr %>"
+    <% if @ldap_auth_group -%>
+    require ldap-group "<%= @ldap_auth_group %>"
+    <% end -%>
+    <% if @ldap_filter_extra -%>
+    <% else -%>
+    require ldap-filter "<%= @ldap_filter_extra %>"
+    <% end -%>
+<% else %>
+    AuthUserFile <%= @web_auth_user_file %>
+    AuthGroupFile <%= @web_auth_group_file %>
+<% end -%>
+    Require valid-user

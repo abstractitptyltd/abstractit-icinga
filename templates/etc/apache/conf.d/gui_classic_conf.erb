@@ -1,0 +1,33 @@
+ScriptAlias <%= @cgi_url %> "<%= @cgi_path %>"
+
+<Directory "<%= @cgi_path %>">
+<%- if @ssl -%>   
+   SSLRequireSSL
+<%- end -%>
+   Options ExecCGI
+   AllowOverride None
+<%= @auth_conf %>
+</Directory>
+
+<% if @css_path_real -%>
+Alias /icinga/stylesheets "<%= @css_path %>"
+
+<Directory "<%= @css_path %>">
+   Options FollowSymlinks
+   AllowOverride All
+   DirectoryIndex index.html
+<%= @auth_conf %>
+</Directory>
+<% end -%>
+
+Alias /icinga "<%= @html_path %>"
+
+<Directory "<%= @html_path %>">
+<%- if @ssl -%>
+   SSLRequireSSL
+<%- end -%>
+   Options FollowSymlinks
+   AllowOverride All
+   DirectoryIndex index.html
+<%= @auth_conf %>
+</Directory>

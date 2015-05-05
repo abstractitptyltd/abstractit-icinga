@@ -2,83 +2,74 @@
 #
 # install necessicary packages for icinga
 
-class icinga::install {
-  include icinga::params
+class icinga::install (
+  $ido_db_server = $::icinga::ido_db_server,
+  $manage_repo   = $::icinga::manage_repo,
+  $gui_type      = $::icinga::gui_type
+) {
 
   case $::osfamily {
     'RedHat' : {
-      if ($::operatingsystem != 'Fedora') {
+      $packages = [ 'icinga', "icinga-idoutils-libdbi-${ido_db_server}"]
+      if ($::operatingsystem != 'Fedora' and $manage_repo) {
         yumrepo { "icinga-stable-release-${::operatingsystemmajrelease}":
           enabled  => 1,
           baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
           gpgcheck => 1,
           gpgkey   => 'http://packages.icinga.org/icinga.key',
         }
+        $package_require = Yumrepo["icinga-stable-release-${::operatingsystemmajrelease}"]
+      } else {
+        $package_require = undef
       }
-
-      package { [
-        'icinga',
-        "icinga-idoutils-libdbi-${icinga::params::ido_db_server}"]:
-        ensure  => present,
-        require => $::operatingsystem ? {
-          'Fedora' => undef,
-          default  => Yumrepo["icinga-stable-release-${::operatingsystemmajrelease}"],
+      case $gui_type {
+        'classic':  {
+          $web_packages         = ['icinga-gui']
+          $web_packages_require = $package_require
+        } 'web': {
+          $web_packages         = ['icinga-web', 'php-soap', 'php-gd', 'php-ldap' ]
+          $web_packages_require = $package_require
+        } 'both': {
+          $web_packages         = ['icinga-gui', 'icinga-web', 'php-soap', 'php-gd', 'php-ldap' ]
+          $web_packages_require = $package_require
+        } default: {
+          $web_packages         = undef
+          $web_packages_require = undef
         }
-      }
-
-      #      ensure_packages(['icinga',"icinga-idoutils-libdbi-${icinga::params::ido_db_server}"])
-      if ($icinga::params::gui_type =~ /^(classic|both)$/) {
-        package { 'icinga-gui':
-          ensure  => present,
-          require => $::operatingsystem ? {
-            'Fedora' => undef,
-            default  => Yumrepo["icinga-stable-release-${::operatingsystemmajrelease}"],
-          }
-        }
-        #        ensure_packages(['icinga-gui'])
-      }
-
-      if ($icinga::params::gui_type =~ /^(web|both)$/) {
-        package { [
-          'icinga-web',
-          'php-soap',
-          'php-gd',
-          'php-ldap']:
-          ensure => present,
-        }
-        #        ensure_packages(['icinga-web','php-soap','php-gd','php-ldap'])
       }
     }
     'Debian' : {
-      include apt
-
-      apt::ppa { 'ppa:formorer/icinga':
+      $packages = ['icinga', 'icinga-idoutils']
+      if $manage_repo {
+        include apt
+        apt::ppa { 'ppa:formorer/icinga': }
+        $package_require = Apt::Ppa['ppa:formorer/icinga']
+      } else {
+        $package_require = undef
       }
-
-      if $icinga::params::gui_type =~ /^(web|both)$/ {
-        apt::ppa { 'ppa:formorer/icinga-web':
+      if $gui_type =~ /^(web|both)$/ {
+        if $manage_repo {
+          apt::ppa { 'ppa:formorer/icinga-web': }
+          $web_packages_require = Apt::Ppa['ppa:formorer/icinga-web']
         }
-
-        package { 'icinga-web':
-          ensure  => present,
-          require => Apt::Ppa['ppa:formorer/icinga-web'],
-        }
-        #        not needed anymore
-        #        if ! defined(Apache::Mod['authn_file']) {
-        #          apache::mod{'authn_file':}
-        #        }
+        $web_packages = 'icinga-web'
+      } else {
+          $web_packages         = undef
+          $web_packages_require = undef
       }
-
-      package { [
-        'icinga',
-        'icinga-idoutils']:
-        ensure  => present,
-        require => Apt::Ppa['ppa:formorer/icinga'],
-      }
-      #      ensure_packages(['icinga','icinga-idoutils'])
     }
     default  : {
       fail("Only support Red Hat and Debian type systems, not ${::osfamily}")
+    }
+  }
+  package { $packages:
+    ensure  => present,
+    require => $package_require
+  }
+  if $web_packages {
+    package { $web_packages:
+      ensure  => present,
+      require => $web_packages_require
     }
   }
 }
