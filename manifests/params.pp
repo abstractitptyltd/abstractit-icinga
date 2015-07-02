@@ -8,7 +8,6 @@ class icinga::params {
   $ssl                  = true
   $ssl_cacrt            = undef
   $ssl_cypher_list      = 'ALL:!ADH:RC4+RSA:+HIGH:!MEDIUM:!LOW:!SSLv2:+SSLv3:+TLSv1:!EXP:!eNULL'
-  $manage_dbs           = true
   $manage_users         = true
   $manage_repo          = true
   $manage_ssl           = false

@@ -2,32 +2,31 @@
 #
 # Configures icinga using the defaults set in the params class
 # should not be called directly
-class icinga::config (
-  $icinga_user          = $::icinga::icinga_user,
-  $icinga_group         = $::icinga::icinga_group,
-  $icinga_cmd_grp       = $::icinga::icinga_cmd_grp,
-  $notifications        = $::icinga::notifications,
-  $enable_ido           = $::icinga::enable_ido,
-  $embedded_perl        = $::icinga::embedded_perl,
-  $perfdata             = $::icinga::perfdata,
-  $perfdatatype         = $::icinga::perfdatatype,
-  $admin_group          = $::icinga::admin_group,
-  $nagios_plugins       = $::icinga::nagios_plugins,
-  $nagios_extra_plugins = $::icinga::nagios_extra_plugins,
-  $db_password          = $::icinga::db_password,
-  $email_password       = $::icinga::email_password,
-  $check_timeout        = $::icinga::check_timeout,
-  $clickatell_api_id    = $::icinga::clickatell_api_id,
-  $clickatell_username  = $::icinga::clickatell_username,
-  $clickatell_password  = $::icinga::clickatell_password,
-  $is_pbx               = $::icinga::is_pbx,
-  $pbx_mngr_pw          = $::icinga::pbx_mngr_pw,
-  $debug                = $::icinga::debug,
-  $admin_email          = $::icinga::admin_email,
-  $admin_pager          = $::icinga::admin_pager,
-  $stalking             = $::icinga::stalking,
-  $flap_detection       = $::icinga::flap_detection,
-) {
+class icinga::config {
+  $icinga_user          = $::icinga::icinga_user
+  $icinga_group         = $::icinga::icinga_group
+  $icinga_cmd_grp       = $::icinga::icinga_cmd_grp
+  $notifications        = $::icinga::notifications
+  $enable_ido           = $::icinga::enable_ido
+  $embedded_perl        = $::icinga::embedded_perl
+  $perfdata             = $::icinga::perfdata
+  $perfdatatype         = $::icinga::perfdatatype
+  $admin_group          = $::icinga::admin_group
+  $nagios_plugins       = $::icinga::nagios_plugins
+  $nagios_extra_plugins = $::icinga::nagios_extra_plugins
+  $db_password          = $::icinga::db_password
+  $email_password       = $::icinga::email_password
+  $check_timeout        = $::icinga::check_timeout
+  $clickatell_api_id    = $::icinga::clickatell_api_id
+  $clickatell_username  = $::icinga::clickatell_username
+  $clickatell_password  = $::icinga::clickatell_password
+  $is_pbx               = $::icinga::is_pbx
+  $pbx_mngr_pw          = $::icinga::pbx_mngr_pw
+  $debug                = $::icinga::debug
+  $admin_email          = $::icinga::admin_email
+  $admin_pager          = $::icinga::admin_pager
+  $stalking             = $::icinga::stalking
+  $flap_detection       = $::icinga::flap_detection
 
   $ensure_idoutils = $enable_ido? {
     default => 'file',

@@ -1,2 +1,2 @@
 forge 'https://forge.puppetlabs.com'
-mod 'icann-icinga', :path => '/vagrant'
+mod 'abstractit-icinga', :path => '/vagrant'

@@ -4,8 +4,8 @@
 #
 
 class icinga::users {
-  $icinga_user = $icinga::icinga_user
-  $icinga_group = $icinga::icinga_group
+  $icinga_user    = $icinga::icinga_user
+  $icinga_group   = $icinga::icinga_group
   $icinga_cmd_grp = $icinga::icinga_cmd_grp
 
   group { $icinga_cmd_grp:

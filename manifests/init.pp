@@ -15,7 +15,6 @@ class icinga (
   $ssl_cacrt                 = $::icinga::params::ssl_cacrt,
   $ssl_cypher_list           = $::icinga::params::ssl_cypher_list,
   $manage_ssl                = $::icinga::params::manage_ssl,
-  $manage_dbs                = $::icinga::params::manage_dbs,
   $manage_users              = $::icinga::params::manage_users,
   $manage_repo               = $::icinga::params::manage_repo,
   $webhostname               = $::icinga::params::webhostname,
@@ -111,7 +110,6 @@ class icinga (
     validate_absolute_path($ssl_cacrt)
   }
   validate_string($ssl_cypher_list)
-  validate_bool($manage_dbs)
   validate_bool($manage_users)
   validate_bool($manage_repo)
   validate_bool($manage_ssl)
@@ -230,27 +228,6 @@ class icinga (
   if $manage_users {
     include icinga::users
     Class['icinga::users'] -> Class['icinga::install']
-  }
-  if $manage_dbs {
-    if $ido_db_server == 'mysql' {
-      include mysql::server
-      mysql::db {$ido_db_name:
-        user     => $ido_db_user,
-        host     => $ido_db_host,
-        password => $ido_db_pass,
-        grant    => ['all'],
-      }
-    }
-    if $web_db_server == 'mysql' {
-      include mysql::server
-      mysql::db {$web_db_name:
-        user     => $web_db_user,
-        host     => $web_db_host,
-        password => $web_db_pass,
-        grant    => ['all'],
-      }
-      Class['mysql::server'] -> Class['icinga::idoconfig']
-    }
   }
 
   include icinga::install

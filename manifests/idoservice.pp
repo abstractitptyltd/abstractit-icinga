@@ -2,9 +2,9 @@
 #
 # manages the the ido service for icinga
 
-class icinga::idoservice (
+class icinga::idoservice {
+
   $enable = $::icinga::enable_ido
-) {
 
   case $enable {
     default: {

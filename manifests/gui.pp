@@ -3,9 +3,9 @@
 # Configures the icinga gui
 
 class icinga::gui (
-  $web_ip              = $::icinga::web_ip,
-  $web_port            = $::icinga::web_port,
-  $icinga_user         = $::icinga::icinga_user,
+  $web_ip               = $::icinga::web_ip,
+  $web_port             = $::icinga::web_port,
+  $icinga_user          = $::icinga::icinga_user,
   $icinga_group         = $::icinga::icinga_group,
   $icinga_cmd_grp       = $::icinga::icinga_cmd_grp,
   $ssl                  = $::icinga::ssl,

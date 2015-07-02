@@ -7,7 +7,6 @@
 class icinga::idoconfig (
   $icinga_user   = $::icinga::icinga_user,
   $icinga_group  = $::icinga::icinga_group,
-  $manage_dbs    = $::icinga::manage_dbs,
   $ido_db_server = $::icinga::ido_db_server,
   $ido_db_host   = $::icinga::ido_db_host,
   $ido_db_name   = $::icinga::ido_db_name,
@@ -19,13 +18,6 @@ class icinga::idoconfig (
 
   # db install file lives here
   # /usr/share/doc/icinga-idoutils-libdbi-mysql-$ICINGA_VERSION/db/${icinga::server}
-  if $manage_dbs {
-    exec {'create idodb db':
-      command => "/usr/bin/mysql -u${ido_db_user} -p${ido_db_pass} ${ido_db_name} < /usr/share/doc/icinga-idoutils/examples/mysql/mysql.sql",
-      unless  => "/usr/bin/mysql -u${ido_db_user} -p${ido_db_pass} -e'show tables' ${ido_db_name} | grep icinga_dbversion",
-      require => Mysql::Db[$ido_db_name],
-    }
-  }
 
   file { '/etc/init.d/ido2db':
     owner   => 'root',

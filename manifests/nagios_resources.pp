@@ -3,9 +3,11 @@
 # create config files for nagios exported resources so config will load
 # should not be called directly
 class icinga::nagios_resources (
-  $icinga_user               = $::icinga::params::icinga_user,
-  $icinga_group              = $::icinga::params::icinga_group,
 ) {
+
+  $icinga_user  = $::icinga::icinga_user,
+  $icinga_group = $::icinga::icinga_group,
+
   $nagios_resource_files = [
     '/etc/nagios/nagios_command.cfg',
     '/etc/nagios/nagios_contact.cfg',

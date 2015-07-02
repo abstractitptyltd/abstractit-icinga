@@ -2,11 +2,11 @@
 #
 # install necessicary packages for icinga
 
-class icinga::install (
+class icinga::install {
+
   $ido_db_server = $::icinga::ido_db_server,
   $manage_repo   = $::icinga::manage_repo,
   $gui_type      = $::icinga::gui_type
-) {
 
   case $::osfamily {
     'RedHat' : {
