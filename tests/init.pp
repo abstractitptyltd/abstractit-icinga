@@ -1,5 +1,5 @@
-include icinga
-include mysql::server
+include ::icinga
+include ::mysql::server
 Class['mysql::server'] -> Class['icinga::idoconfig']
 mysql::db {$::icinga::ido_db_name:
   user     => $::icinga::ido_db_user,

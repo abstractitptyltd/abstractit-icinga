@@ -2,7 +2,7 @@
   "name": "abstractit-icinga",
   "version": "1.2.2-rc11",
   "author": "Abstract IT",
-  "license": "Apache v2 Licence",
+  "license": "Apache-2.0",
   "summary": "manage an icinga server",
   "source": "https://github.com/abstractitptyltd/abstractit-icinga",
   "project_page": "https://github.com/abstractitptyltd/abstractit-icinga",
@@ -15,6 +15,39 @@
         "12.04",
         "14.04"
       ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
     }
   ],
   "dependencies": [
@@ -37,16 +70,6 @@
     {
       "name": "puppetlabs/mysql",
       "version_requirement": ">=3.3.0"
-    }
-  ],
-  "requirements": [
-    {
-      "name": "pe",
-      "version_requirement": "3.2.x"
-    },
-    {
-      "name": "puppet",
-      "version_requirement": "3.x"
     }
   ]
 }
