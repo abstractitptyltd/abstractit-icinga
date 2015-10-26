@@ -1,0 +1,28 @@
+
+<% if @web_auth_type == 'ldap' \
+   && @ldap_security =~ /(tls|ssl)/ -%>
+## ldap config   
+LDAPVerifyServerCert Off
+LDAPTrustedMode <% if @ldap_security == 'tls' %>TLS<% else %>SSL<% end %>
+LDAPSharedCacheSize 500000
+LDAPCacheEntries 1024
+LDAPCacheTTL 600
+LDAPOpCacheEntries 1024
+LDAPOpCacheTTL 600
+<% end -%>
+
+<% if @gui_type =~ /^(classic|both)$/ -%>
+#### config for classic interface
+<%= @classic_conf %>
+<% end -%>
+<% if @gui_type =~ /^(web|both)$/ %>
+#### config for new web interface
+<%= @web_conf %>
+<% end -%>
+
+<% if @perfdata == true -%>
+## pnp4nagios gui
+  <%- if @perfdatatype == 'pnp4nagios' %>
+<%= @pnp4nagios_conf %>
+  <%- end -%>
+<% end -%>

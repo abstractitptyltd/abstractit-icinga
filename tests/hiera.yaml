@@ -1,0 +1,8 @@
+---
+:backends:
+  - yaml
+  - json
+:yaml:
+  :datadir: /vagrant/tests/nodes/
+:hierarchy:
+  - "%{::fqdn}"

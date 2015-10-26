@@ -4,10 +4,9 @@
 #
 
 class icinga::users {
-  include icinga::params
-  $icinga_user = $icinga::params::icinga_user
-  $icinga_group = $icinga::params::icinga_group
-  $icinga_cmd_grp = $icinga::params::icinga_cmd_grp
+  $icinga_user    = $icinga::icinga_user
+  $icinga_group   = $icinga::icinga_group
+  $icinga_cmd_grp = $icinga::icinga_cmd_grp
 
   group { $icinga_cmd_grp:
     ensure => present,

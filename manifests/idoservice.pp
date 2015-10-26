@@ -4,16 +4,14 @@
 
 class icinga::idoservice {
 
-  include icinga::params
-  $enable_ido = $icinga::params::enable_ido
-  case $enable_ido {
+  $enable = $::icinga::enable_ido
+
+  case $enable {
     default: {
-      $ido_enable = true
-      $ido_ensure = 'running'
+      $ensure = 'running'
     }
     false: {
-      $ido_enable = false
-      $ido_ensure = 'stopped'
+      $ensure = 'stopped'
     }
   }
 
@@ -31,13 +29,12 @@ class icinga::idoservice {
     }
   }
   service { 'ido2db':
-    ensure     => $ido_ensure,
+    ensure     => $ensure,
     name       => $servicename,
     provider   => $provider,
-    enable     => $ido_enable,
+    enable     => $enable,
     hasstatus  => true,
     hasrestart => true,
     require    => Class[icinga::idoconfig],
   }
-
 }

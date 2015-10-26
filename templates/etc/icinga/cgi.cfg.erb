@@ -13,7 +13,7 @@
 main_config_file=/etc/icinga/icinga.cfg
 
 
-icinga_check_command=<%= scope.lookupvar('icinga::params::nagios_plugins') %>/check_nagios /var/spool/icinga/status.dat 5 '/usr/sbin/icinga'
+icinga_check_command=<%= @nagios_plugins %>/check_nagios /var/spool/icinga/status.dat 5 '/usr/sbin/icinga'
 
 
 
@@ -29,7 +29,7 @@ icinga_check_command=<%= scope.lookupvar('icinga::params::nagios_plugins') %>/ch
 # value is used to locate the logo images needed by the statusmap
 # and status CGIs.
 
-physical_html_path=<%= scope.lookupvar('icinga::params::icinga_html_path_real') %>
+physical_html_path=<%= @icinga_html_path_real %>
 
 
 

@@ -1,10 +1,10 @@
 # SAMPLE CONFIG SNIPPETS FOR APACHE WEB SERVER
 
-Alias /pnp4nagios "<%= scope.lookupvar("icinga::params::pnp4nagios_html_path_real") %>"
+Alias /pnp4nagios "<%= @pnp4nagios_html_path %>"
 
-<Directory "<%= scope.lookupvar("icinga::params::pnp4nagios_html_path_real") %>">
+<Directory "<%= @pnp4nagios_html_path %>">
    	AllowOverride None
-<%= scope.lookupvar('icinga::gui::auth_conf') %>
+<%= @auth_conf %>
 	<IfModule mod_rewrite.c>
 		# Turn on URL rewriting
 		RewriteEngine On
