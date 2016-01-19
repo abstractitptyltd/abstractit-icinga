@@ -5,8 +5,8 @@
 class icinga::nagios_resources (
 ) {
 
-  $icinga_user  = $::icinga::icinga_user,
-  $icinga_group = $::icinga::icinga_group,
+  $icinga_user  = $::icinga::icinga_user
+  $icinga_group = $::icinga::icinga_group
 
   $nagios_resource_files = [
     '/etc/nagios/nagios_command.cfg',

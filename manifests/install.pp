@@ -4,8 +4,8 @@
 
 class icinga::install {
 
-  $ido_db_server = $::icinga::ido_db_server,
-  $manage_repo   = $::icinga::manage_repo,
+  $ido_db_server = $::icinga::ido_db_server
+  $manage_repo   = $::icinga::manage_repo
   $gui_type      = $::icinga::gui_type
 
   case $::osfamily {
