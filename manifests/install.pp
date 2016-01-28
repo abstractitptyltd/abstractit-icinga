@@ -4,8 +4,8 @@
 
 class icinga::install {
 
-  $ido_db_server = $::icinga::ido_db_server,
-  $manage_repo   = $::icinga::manage_repo,
+  $ido_db_server = $::icinga::ido_db_server
+  $manage_repo   = $::icinga::manage_repo
   $gui_type      = $::icinga::gui_type
 
   case $::osfamily {
@@ -41,7 +41,7 @@ class icinga::install {
     'Debian' : {
       $packages = ['icinga', 'icinga-idoutils']
       if $manage_repo {
-        include apt
+        include ::apt
         apt::ppa { 'ppa:formorer/icinga': }
         $package_require = Apt::Ppa['ppa:formorer/icinga']
       } else {

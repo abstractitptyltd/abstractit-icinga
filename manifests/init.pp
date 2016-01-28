@@ -95,7 +95,7 @@ class icinga (
   $db_options            = '^(mysql|pgsql)$'
   $auth_type_options     = '^(internal|httpbasic|ldap|none)$'
   $ldap_security_options = '^(tls|ssl|none)$'
-  
+
   unless is_ip_address($web_ip) {
     fail("\$web_ip (${web_ip}) Must be a valid ip address")
   }
@@ -117,7 +117,7 @@ class icinga (
   validate_bool($configure_firewall)
   validate_re($gui_type, $gui_options)
   #this should probably be a bool
-  validate_integer($notifications)
+  validate_bool($notifications)
   #this should probably be a bool
   validate_integer($embedded_perl)
   validate_bool($perfdata)
@@ -226,16 +226,16 @@ class icinga (
   validate_absolute_path($cgi_url)
 
   if $manage_users {
-    include icinga::users
+    include ::icinga::users
     Class['icinga::users'] -> Class['icinga::install']
   }
 
-  include icinga::install
-  include icinga::idoconfig
-  include icinga::idoservice
-  include icinga::config
-  include icinga::nagios_resources
-  include icinga::service
+  include ::icinga::install
+  include ::icinga::idoconfig
+  include ::icinga::idoservice
+  include ::icinga::config
+  include ::icinga::nagios_resources
+  include ::icinga::service
 
 
   Class['icinga::install'] -> Class['icinga::idoconfig']
@@ -245,9 +245,9 @@ class icinga (
   Class['icinga::config'] ~> Class['icinga::service']
   Class['icinga::nagios_resources'] ~> Class['icinga::service']
 
-  include icinga::gui
+  include ::icinga::gui
 
   if ( $perfdata  and $perfdatatype =~ /^pnp4nagios$/ ) {
-    include pnp4nagios
+    include ::pnp4nagios
   }
 }

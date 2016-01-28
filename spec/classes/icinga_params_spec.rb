@@ -2,8 +2,7 @@
 require 'spec_helper'
 require 'pry'
 
-describe 'icinga' do
-  let(:pre_condition){ 'class{"icinga::params":}'}
+describe 'icinga::params', :type => :class do
   on_supported_os({
       :hardwaremodels => ['x86_64'],
       :supported_os   => [
@@ -29,7 +28,7 @@ describe 'icinga' do
       end
       it { is_expected.to compile.with_all_deps }
       context 'when fed no parameters' do
-        it { should create_class('icinga') }
+        it { should create_class('icinga::params') }
       end#no params
     end
   end

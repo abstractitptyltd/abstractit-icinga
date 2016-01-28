@@ -14,7 +14,7 @@ class icinga::params {
   $webhostname          = $::fqdn
   $configure_firewall   = true
   $gui_type             = 'classic'
-  $notifications        = 1
+  $notifications        = true
   $embedded_perl        = 0
   $perfdata             = false
   $perfdatatype         = 'pnp4nagios'

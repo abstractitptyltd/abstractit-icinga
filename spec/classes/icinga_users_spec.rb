@@ -2,8 +2,9 @@
 require 'spec_helper'
 require 'pry'
 
-describe 'icinga' do
+describe 'icinga::users', :type => :class do
   let(:pre_condition){ 'class{"icinga::params":}'}
+  let(:pre_condition){ 'class{"icinga":}'}
   on_supported_os({
       :hardwaremodels => ['x86_64'],
       :supported_os   => [
@@ -24,12 +25,12 @@ describe 'icinga' do
     context "When on an #{os} system" do
       let(:facts) do
         facts.merge({
-          :concat_basedir => '/tmp',
+          :concat_basedir => '/tmp'
         })
       end
       it { is_expected.to compile.with_all_deps }
       context 'when fed no parameters' do
-        it { should create_class('icinga') }
+        it { should create_class('icinga::users') }
       end#no params
     end
   end

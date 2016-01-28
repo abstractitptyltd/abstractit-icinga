@@ -12,8 +12,7 @@ class icinga::idoconfig (
   $ido_db_name   = $::icinga::ido_db_name,
   $ido_db_user   = $::icinga::ido_db_user,
   $ido_db_pass   = $::icinga::ido_db_pass,
-  $ido_db_port   = $::icinga::ido_db_port
-  
+  $ido_db_port   = $::icinga::ido_db_port,
 ) {
 
   # db install file lives here
@@ -43,4 +42,3 @@ class icinga::idoconfig (
   }
 
 }
-
